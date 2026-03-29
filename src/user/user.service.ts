@@ -1,17 +1,22 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/Database/prisma.service';
 import { Prisma, User } from 'src/generated/prisma/client';
-
+import { PasswordService } from './password.service';
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private passwordService: PasswordService,
+  ) {}
 
   async user(
     userWhereUniqueInput: Prisma.UserWhereUniqueInput,
   ): Promise<User | null> {
-    this.logger.log(`Buscando usuario por: ${JSON.stringify(userWhereUniqueInput)}`);
+    this.logger.log(
+      `Buscando usuario por: ${JSON.stringify(userWhereUniqueInput)}`,
+    );
 
     try {
       const user = await this.prisma.user.findUnique({
@@ -62,8 +67,12 @@ export class UserService {
     this.logger.log(`Creando usuario con email: ${data.email}`);
 
     try {
+      const hashedPassword = await this.passwordService.hash(data.password);
       const user = await this.prisma.user.create({
-        data,
+        data: {
+          ...data,
+          password: hashedPassword,
+        },
       });
 
       this.logger.log(`Usuario creado con ID: ${user.id}`);
@@ -73,17 +82,31 @@ export class UserService {
       throw error;
     }
   }
-
   async updateUser(params: {
     where: Prisma.UserWhereUniqueInput;
     data: Prisma.UserUpdateInput;
   }): Promise<User> {
     this.logger.log(
-      `Actualizando usuario ${JSON.stringify(params.where)} con data: ${JSON.stringify(params.data)}`,
+      `Actualizando usuario ${JSON.stringify(params.where)}`,
     );
 
     try {
-      const user = await this.prisma.user.update(params);
+      const { data, where } = params;
+
+      // Si viene password, lo hasheamos
+      if (data.password) {
+        const hashedPassword = await this.passwordService.hash(
+          data.password as string,
+        );
+
+        data.password = hashedPassword; // Sobrescribimos el valor plano
+      }
+
+      const user = await this.prisma.user.update({
+        where,
+        data,
+      });
+
       this.logger.log(`Usuario actualizado: ${user.id}`);
       return user;
     } catch (error) {
