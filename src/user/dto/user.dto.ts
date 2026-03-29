@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UserCreateDto {
   @IsString()
@@ -34,6 +34,32 @@ export class UserResponseDto {
   password: string;
 
   constructor(partial: Partial<UserResponseDto>) {
+    Object.assign(this, partial);
+  }
+}
+
+export class UpdateUserDto {
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsString()
+  lastName?: string;
+
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  @IsOptional()
+  @IsString()
+  email?: string;
+
+  @IsOptional()
+  @IsString()
+  password?: string;
+
+  constructor(partial: Partial<UpdateUserDto>) {
     Object.assign(this, partial);
   }
 }
