@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
+import cookieParser from 'cookie-parser';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -26,6 +28,7 @@ async function bootstrap() {
   app.useGlobalFilters(new ValidationExceptionFilter());
 
   const port = process.env.PORT ?? 3000;
+  app.use(cookieParser());
   await app.listen(port);
 
   logger.log(`🚀 Server running on port ${port}`);

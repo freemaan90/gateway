@@ -44,22 +44,25 @@ export class UserService {
     }
   }
 
-  async users(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.UserWhereUniqueInput;
-    where?: Prisma.UserWhereInput;
-    orderBy?: Prisma.UserOrderByWithRelationInput;
-  }): Promise<User[]> {
-    this.logger.log(`Buscando usuarios con filtros: ${JSON.stringify(params)}`);
-
+  async findByEmail(email: string) {
+    this.logger.log(`Buscando usuario con email: ${email}`);
     try {
-      const users = await this.prisma.user.findMany(params);
-      this.logger.log(`Usuarios encontrados: ${users.length}`);
-      return users;
+      const user = await this.prisma.user.findFirst({
+        where: {
+          email,
+        },
+      });
+
+      if (!user) {
+        this.logger.log(`Usuario no encontrado encontrado con email: ${email}`);
+        return null;
+      }
+
+      this.logger.log(`Usuario encontrado con email: ${user.email}`);
+
+      return user;
     } catch (error) {
-      this.logger.error('Error buscando usuarios con filtros', error.stack);
-      throw error;
+      this.logger.error(`Error buscando usuario`, error.stack);
     }
   }
 
@@ -86,9 +89,7 @@ export class UserService {
     where: Prisma.UserWhereUniqueInput;
     data: Prisma.UserUpdateInput;
   }): Promise<User> {
-    this.logger.log(
-      `Actualizando usuario ${JSON.stringify(params.where)}`,
-    );
+    this.logger.log(`Actualizando usuario ${JSON.stringify(params.where)}`);
 
     try {
       const { data, where } = params;
@@ -124,6 +125,51 @@ export class UserService {
       return user;
     } catch (error) {
       this.logger.error(`Error eliminando usuario`, error.stack);
+      throw error;
+    }
+  }
+  async updateRefreshToken(userId: string, refreshToken: string) {
+    this.logger.log(`Actualizando refresh token para usuario: ${userId}`);
+
+    try {
+      const hashedToken = await this.passwordService.hash(refreshToken);
+
+      const user = await this.prisma.user.update({
+        where: { id: Number(userId) },
+        data: {
+          refreshToken: hashedToken,
+        },
+      });
+
+      this.logger.log(`Refresh token actualizado para usuario: ${user.id}`);
+      return user;
+    } catch (error) {
+      this.logger.error(
+        `Error actualizando refresh token para usuario ${userId}`,
+        error.stack,
+      );
+      throw error;
+    }
+  }
+
+  async removeRefreshToken(userId: string) {
+    this.logger.log(`Removiendo refresh token para usuario: ${userId}`);
+
+    try {
+      const user = await this.prisma.user.update({
+        where: { id: Number(userId) },
+        data: {
+          refreshToken: null,
+        },
+      });
+
+      this.logger.log(`Refresh token removido para usuario: ${user.id}`);
+      return user;
+    } catch (error) {
+      this.logger.error(
+        `Error removiendo refresh token para usuario ${userId}`,
+        error.stack,
+      );
       throw error;
     }
   }

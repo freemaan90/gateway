@@ -20,4 +20,5 @@ model User {
   lastName String
   phone    String
   password String
+  refreshToken  String?  // <- opcional
 }
