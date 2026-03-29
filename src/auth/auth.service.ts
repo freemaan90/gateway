@@ -7,16 +7,16 @@ import { UserService } from "src/user/user.service";
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UserService,
-    private jwt: JwtService,
-    private passwordService: PasswordService,
+    private readonly usersService: UserService,
+    private readonly jwt: JwtService,
+    private readonly passwordService: PasswordService,
   ) {}
 
   async validateUser(email: string, pass: string) {
     const user = await this.usersService.findByEmail(email);
     if (!user) return null;
 
-    const isMatch = await this.passwordService.compare(pass, user.password)
+    const isMatch = await this.passwordService.compare(pass, user.password);
     return isMatch ? user : null;
   }
 
@@ -33,9 +33,6 @@ export class AuthService {
 
     await this.usersService.updateRefreshToken(String(user.id), refreshToken);
 
-    return {
-      accessToken,
-      refreshToken,
-    };
+    return { accessToken, refreshToken };
   }
 }

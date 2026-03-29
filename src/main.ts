@@ -10,6 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
+  app.use(cookieParser());
 
   const logger = new Logger('Gateway');
 
@@ -20,13 +21,13 @@ async function bootstrap() {
 
   // Leer variables
   const port = configService.get<number>('PORT') ?? 3000;
-  const corsOrigin = configService.get<string>('CORS_ORIGIN') ?? '*';
-
   // Configurar CORS usando config
-  app.enableCors({
-    origin: corsOrigin,
-    credentials: true,
-  });
+app.enableCors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+});
+
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -38,8 +39,6 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new ValidationExceptionFilter());
-
-  app.use(cookieParser());
 
   await app.listen(port);
 
