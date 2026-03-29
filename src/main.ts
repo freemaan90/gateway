@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -21,6 +22,8 @@ async function bootstrap() {
   );
   // 👇 interceptor global
   app.useGlobalInterceptors(new TransformInterceptor());
+  // 👇 Activar el filtro global
+  app.useGlobalFilters(new ValidationExceptionFilter());
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
