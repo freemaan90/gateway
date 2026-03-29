@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe, Logger } from '@nestjs/common';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -18,6 +19,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  // 👇 interceptor global
+  app.useGlobalInterceptors(new TransformInterceptor());
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
