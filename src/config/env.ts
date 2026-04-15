@@ -31,4 +31,6 @@ export const env = {
   },
 
   nodeEnv: process.env.NODE_ENV ?? 'development',
+
+  VERIFY_TOKEN: required('VERIFY_TOKEN')
 };

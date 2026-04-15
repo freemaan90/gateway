@@ -67,10 +67,7 @@ export interface PrismaClientConstructor {
    * Type-safe database client for TypeScript
    * @example
    * ```
-   * const prisma = new PrismaClient({
-   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
-   * })
-   * // Fetch zero or more Users
+ zero or more Users
    * const users = await prisma.user.findMany()
    * ```
    * 
