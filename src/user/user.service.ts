@@ -25,7 +25,7 @@ export class UserService {
 
       this.logger.log(`Usuario encontrado: ${user?.id ?? 'none'}`);
       return user;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(`Error buscando usuario`, error.stack);
       throw error;
     }
@@ -38,7 +38,7 @@ export class UserService {
       const users = await this.prisma.user.findMany();
       this.logger.log(`Usuarios encontrados: ${users.length}`);
       return users;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error('Error buscando todos los usuarios', error.stack);
       throw error;
     }
@@ -61,7 +61,7 @@ export class UserService {
       this.logger.log(`Usuario encontrado con email: ${user.email}`);
 
       return user;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(`Error buscando usuario`, error.stack);
     }
   }
@@ -80,7 +80,7 @@ export class UserService {
 
       this.logger.log(`Usuario creado con ID: ${user.id}`);
       return user;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(`Error creando usuario`, error.stack);
       throw error;
     }
@@ -110,7 +110,7 @@ export class UserService {
 
       this.logger.log(`Usuario actualizado: ${user.id}`);
       return user;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(`Error actualizando usuario`, error.stack);
       throw error;
     }
@@ -123,7 +123,7 @@ export class UserService {
       const user = await this.prisma.user.delete({ where });
       this.logger.log(`Usuario eliminado: ${user.id}`);
       return user;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(`Error eliminando usuario`, error.stack);
       throw error;
     }
@@ -143,7 +143,7 @@ export class UserService {
 
       this.logger.log(`Refresh token actualizado para usuario: ${user.id}`);
       return user;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(
         `Error actualizando refresh token para usuario ${userId}`,
         error.stack,
@@ -165,12 +165,72 @@ export class UserService {
 
       this.logger.log(`Refresh token removido para usuario: ${user.id}`);
       return user;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(
         `Error removiendo refresh token para usuario ${userId}`,
         error.stack,
       );
       throw error;
     }
+  }
+
+  async changePassword(
+    userId: number,
+    currentPassword: string,
+    newPassword: string,
+  ) {
+    this.logger.log(`Intentando cambiar contraseña del usuario ${userId}`);
+
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    // Validar contraseña actual
+    const isValid = await this.passwordService.compare(
+      currentPassword,
+      user.password,
+    );
+
+    if (!isValid) {
+      throw new Error('La contraseña actual es incorrecta');
+    }
+
+    // Hashear nueva contraseña
+    const hashedPassword = await this.passwordService.hash(newPassword);
+
+    // Actualizar
+    const updatedUser = await this.prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+
+    this.logger.log(`Contraseña actualizada para usuario ${userId}`);
+
+    return { message: 'Contraseña actualizada correctamente' };
+  }
+
+  async resetPassword(email: string, newPassword: string) {
+    this.logger.log(`Intentando resetear contraseña para ${email}`);
+
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new Error('No existe un usuario con ese email');
+    }
+
+    const hashedPassword = await this.passwordService.hash(newPassword);
+
+    await this.prisma.user.update({
+      where: { email },
+      data: { password: hashedPassword },
+    });
+
+    this.logger.log(`Contraseña reseteada para ${email}`);
+
+    return { message: 'Contraseña actualizada correctamente' };
   }
 }

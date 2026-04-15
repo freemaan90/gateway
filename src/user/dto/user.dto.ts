@@ -4,34 +4,44 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class UserCreateDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
   @IsString()
   @IsNotEmpty()
-  email: string;
+  email!: string;
   @IsString()
   @IsNotEmpty()
-  lastName: string;
+  lastName!: string;
   @IsString()
   @IsNotEmpty()
-  phone: string;
+  phone!: string;
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password!: string;
 
-    constructor(partial: Partial<UserCreateDto>) {
+  constructor(partial: Partial<UserCreateDto>) {
     Object.assign(this, partial);
   }
 }
 
 export class UserResponseDto {
-  id: number;
-  name: string;
-  email: string;
-  lastName: string;
-  phone: string;
+  @IsString()
+  @IsNotEmpty()
+  id!: number;
+  @IsString()
+  @IsNotEmpty()
+  name!: string;
+  @IsString()
+  @IsNotEmpty()
+  email!: string;
+  @IsString()
+  @IsNotEmpty()
+  lastName!: string;
+  @IsString()
+  @IsNotEmpty()
+  phone!: string;
 
   @Exclude()
-  password: string;
+  password!: string;
 
   constructor(partial: Partial<UserResponseDto>) {
     Object.assign(this, partial);
@@ -62,4 +72,12 @@ export class UpdateUserDto {
   constructor(partial: Partial<UpdateUserDto>) {
     Object.assign(this, partial);
   }
+}
+export class ChangePasswordDto {
+  @IsString()
+  @IsNotEmpty()
+  email!: string
+  @IsString()
+  @IsNotEmpty()
+  newPassword!: string 
 }
