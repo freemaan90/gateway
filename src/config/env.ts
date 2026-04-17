@@ -11,6 +11,8 @@ function required(key: string): string {
 
 export const env = {
   port: Number(process.env.PORT ?? 3000),
+  BFF_WHATSAPP_SENDER_HOST: required('BFF_WHATSAPP_SENDER_HOST'),
+  BFF_WHATSAPP_SENDER_PORT: Number(required('BFF_WHATSAPP_SENDER_PORT')),
 
   databaseUrl: required('DATABASE_URL'),
 

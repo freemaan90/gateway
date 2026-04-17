@@ -7,9 +7,23 @@ import { ConfigModule } from '@nestjs/config';
 import { envValidationSchema } from './config/env.validation';
 import { AuthModule } from './auth/auth.module';
 import { WebhookModule } from './webhook/webhook.module';
+import { WHATSAPP_SENDER } from './service';
+import {env} from './config/env';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { WhatsappSenderModule } from './whatsapp-sender/whatsapp-sender.module';
 
 @Module({
   imports: [
+    ClientsModule.register([
+      {
+        name: WHATSAPP_SENDER,
+        transport: Transport.TCP,
+        options: {
+          host: env.BFF_WHATSAPP_SENDER_HOST,
+          port: env.BFF_WHATSAPP_SENDER_PORT,
+        },
+      },
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: envValidationSchema,
@@ -18,8 +32,11 @@ import { WebhookModule } from './webhook/webhook.module';
     HealthModule,
     AuthModule,
     WebhookModule,
+    WhatsappSenderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+
+
