@@ -67,6 +67,28 @@ export class UserService {
     }
   }
 
+  async findById(id: number) {
+    this.logger.log(`Buscando usuario con ID: ${id}`);
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (!user) {
+        this.logger.log(`Usuario no encontrado con ID: ${id}`);
+        return null;
+      }
+
+      this.logger.log(`Usuario encontrado con ID: ${user.id}`);
+
+      return user;
+    } catch (error: any) {
+      this.logger.error(`Error buscando usuario`, error.stack);
+    }
+  }
+
   async createOwner(data: {
     name: string;
     lastName: string;

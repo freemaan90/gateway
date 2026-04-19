@@ -65,4 +65,7 @@ export class AuthService {
 
     return { accessToken, refreshToken };
   }
+  async getProfile(userId: number) {
+    return this.usersService.findById(userId);
+  }
 }

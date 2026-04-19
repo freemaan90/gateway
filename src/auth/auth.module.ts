@@ -8,10 +8,12 @@ import { RefreshTokenStrategy } from './strategies/refresh.strategy';
 import { PrismaService } from 'src/Database/prisma.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
