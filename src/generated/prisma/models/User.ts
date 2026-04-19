@@ -28,10 +28,12 @@ export type AggregateUser = {
 
 export type UserAvgAggregateOutputType = {
   id: number | null
+  ownerId: number | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
+  ownerId: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -42,6 +44,8 @@ export type UserMinAggregateOutputType = {
   phone: string | null
   password: string | null
   refreshToken: string | null
+  role: $Enums.Role | null
+  ownerId: number | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -52,6 +56,8 @@ export type UserMaxAggregateOutputType = {
   phone: string | null
   password: string | null
   refreshToken: string | null
+  role: $Enums.Role | null
+  ownerId: number | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -62,16 +68,20 @@ export type UserCountAggregateOutputType = {
   phone: number
   password: number
   refreshToken: number
+  role: number
+  ownerId: number
   _all: number
 }
 
 
 export type UserAvgAggregateInputType = {
   id?: true
+  ownerId?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
+  ownerId?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -82,6 +92,8 @@ export type UserMinAggregateInputType = {
   phone?: true
   password?: true
   refreshToken?: true
+  role?: true
+  ownerId?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -92,6 +104,8 @@ export type UserMaxAggregateInputType = {
   phone?: true
   password?: true
   refreshToken?: true
+  role?: true
+  ownerId?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -102,6 +116,8 @@ export type UserCountAggregateInputType = {
   phone?: true
   password?: true
   refreshToken?: true
+  role?: true
+  ownerId?: true
   _all?: true
 }
 
@@ -199,6 +215,8 @@ export type UserGroupByOutputType = {
   phone: string
   password: string
   refreshToken: string | null
+  role: $Enums.Role
+  ownerId: number | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -232,6 +250,10 @@ export type UserWhereInput = {
   phone?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   refreshToken?: Prisma.StringNullableFilter<"User"> | string | null
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  ownerId?: Prisma.IntNullableFilter<"User"> | number | null
+  owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  employees?: Prisma.UserListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -242,6 +264,10 @@ export type UserOrderByWithRelationInput = {
   phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  owner?: Prisma.UserOrderByWithRelationInput
+  employees?: Prisma.UserOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -255,6 +281,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   refreshToken?: Prisma.StringNullableFilter<"User"> | string | null
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  ownerId?: Prisma.IntNullableFilter<"User"> | number | null
+  owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  employees?: Prisma.UserListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -265,6 +295,8 @@ export type UserOrderByWithAggregationInput = {
   phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -283,6 +315,8 @@ export type UserScalarWhereWithAggregatesInput = {
   phone?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   refreshToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+  ownerId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
 }
 
 export type UserCreateInput = {
@@ -292,6 +326,9 @@ export type UserCreateInput = {
   phone: string
   password: string
   refreshToken?: string | null
+  role?: $Enums.Role
+  owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
+  employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -302,6 +339,9 @@ export type UserUncheckedCreateInput = {
   phone: string
   password: string
   refreshToken?: string | null
+  role?: $Enums.Role
+  ownerId?: number | null
+  employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUpdateInput = {
@@ -311,6 +351,9 @@ export type UserUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
+  employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -321,6 +364,9 @@ export type UserUncheckedUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -331,6 +377,8 @@ export type UserCreateManyInput = {
   phone: string
   password: string
   refreshToken?: string | null
+  role?: $Enums.Role
+  ownerId?: number | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -340,6 +388,7 @@ export type UserUpdateManyMutationInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -350,6 +399,23 @@ export type UserUncheckedUpdateManyInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -360,10 +426,13 @@ export type UserCountOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -374,6 +443,8 @@ export type UserMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -384,10 +455,33 @@ export type UserMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+}
+
+export type UserCreateNestedOneWithoutEmployeesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmployeesInput, Prisma.UserUncheckedCreateWithoutEmployeesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmployeesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput> | Prisma.UserCreateWithoutOwnerInput[] | Prisma.UserUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnerInput | Prisma.UserCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.UserCreateManyOwnerInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput> | Prisma.UserCreateWithoutOwnerInput[] | Prisma.UserUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnerInput | Prisma.UserCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.UserCreateManyOwnerInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -398,6 +492,34 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type EnumRoleFieldUpdateOperationsInput = {
+  set?: $Enums.Role
+}
+
+export type UserUpdateOneWithoutEmployeesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmployeesInput, Prisma.UserUncheckedCreateWithoutEmployeesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmployeesInput
+  upsert?: Prisma.UserUpsertWithoutEmployeesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEmployeesInput, Prisma.UserUpdateWithoutEmployeesInput>, Prisma.UserUncheckedUpdateWithoutEmployeesInput>
+}
+
+export type UserUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput> | Prisma.UserCreateWithoutOwnerInput[] | Prisma.UserUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnerInput | Prisma.UserCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutOwnerInput | Prisma.UserUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.UserCreateManyOwnerInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutOwnerInput | Prisma.UserUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutOwnerInput | Prisma.UserUpdateManyWithWhereWithoutOwnerInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -406,6 +528,228 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type UserUncheckedUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput> | Prisma.UserCreateWithoutOwnerInput[] | Prisma.UserUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnerInput | Prisma.UserCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutOwnerInput | Prisma.UserUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.UserCreateManyOwnerInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutOwnerInput | Prisma.UserUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutOwnerInput | Prisma.UserUpdateManyWithWhereWithoutOwnerInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateWithoutEmployeesInput = {
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+  owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
+}
+
+export type UserUncheckedCreateWithoutEmployeesInput = {
+  id?: number
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+  ownerId?: number | null
+}
+
+export type UserCreateOrConnectWithoutEmployeesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmployeesInput, Prisma.UserUncheckedCreateWithoutEmployeesInput>
+}
+
+export type UserCreateWithoutOwnerInput = {
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+  employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutOwnerInput = {
+  id?: number
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+  employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutOwnerInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput>
+}
+
+export type UserCreateManyOwnerInputEnvelope = {
+  data: Prisma.UserCreateManyOwnerInput | Prisma.UserCreateManyOwnerInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithoutEmployeesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEmployeesInput, Prisma.UserUncheckedUpdateWithoutEmployeesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmployeesInput, Prisma.UserUncheckedCreateWithoutEmployeesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEmployeesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEmployeesInput, Prisma.UserUncheckedUpdateWithoutEmployeesInput>
+}
+
+export type UserUpdateWithoutEmployeesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEmployeesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type UserUpsertWithWhereUniqueWithoutOwnerInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOwnerInput, Prisma.UserUncheckedUpdateWithoutOwnerInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutOwnerInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOwnerInput, Prisma.UserUncheckedUpdateWithoutOwnerInput>
+}
+
+export type UserUpdateManyWithWhereWithoutOwnerInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutOwnerInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.IntFilter<"User"> | number
+  email?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  lastName?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  refreshToken?: Prisma.StringNullableFilter<"User"> | string | null
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  ownerId?: Prisma.IntNullableFilter<"User"> | number | null
+}
+
+export type UserCreateManyOwnerInput = {
+  id?: number
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+}
+
+export type UserUpdateWithoutOwnerInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOwnerInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutOwnerInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  employees: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  employees?: boolean | UserCountOutputTypeCountEmployeesArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEmployeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -416,6 +760,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   phone?: boolean
   password?: boolean
   refreshToken?: boolean
+  role?: boolean
+  ownerId?: boolean
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
+  employees?: boolean | Prisma.User$employeesArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -426,6 +775,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   phone?: boolean
   password?: boolean
   refreshToken?: boolean
+  role?: boolean
+  ownerId?: boolean
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -436,6 +788,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   phone?: boolean
   password?: boolean
   refreshToken?: boolean
+  role?: boolean
+  ownerId?: boolean
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -446,13 +801,29 @@ export type UserSelectScalar = {
   phone?: boolean
   password?: boolean
   refreshToken?: boolean
+  role?: boolean
+  ownerId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "phone" | "password" | "refreshToken", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "phone" | "password" | "refreshToken" | "role" | "ownerId", ExtArgs["result"]["user"]>
+export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
+  employees?: boolean | Prisma.User$employeesArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
-  objects: {}
+  objects: {
+    owner: Prisma.$UserPayload<ExtArgs> | null
+    employees: Prisma.$UserPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     email: string
@@ -461,6 +832,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     phone: string
     password: string
     refreshToken: string | null
+    role: $Enums.Role
+    ownerId: number | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -855,6 +1228,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  owner<T extends Prisma.User$ownerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ownerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  employees<T extends Prisma.User$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -891,6 +1266,8 @@ export interface UserFieldRefs {
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly refreshToken: Prisma.FieldRef<"User", 'String'>
+  readonly role: Prisma.FieldRef<"User", 'Role'>
+  readonly ownerId: Prisma.FieldRef<"User", 'Int'>
 }
     
 
@@ -907,6 +1284,10 @@ export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -926,6 +1307,10 @@ export type UserFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -943,6 +1328,10 @@ export type UserFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -992,6 +1381,10 @@ export type UserFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -1039,6 +1432,10 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which Users to fetch.
    */
@@ -1088,6 +1485,10 @@ export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * The data needed to create a User.
    */
   data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
@@ -1121,6 +1522,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1135,6 +1540,10 @@ export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The data needed to update a User.
    */
@@ -1187,6 +1596,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1201,6 +1614,10 @@ export type UserUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The filter to search for the User to update in case it exists.
    */
@@ -1228,6 +1645,10 @@ export type UserDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter which User to delete.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1248,6 +1669,49 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.owner
+ */
+export type User$ownerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * User.employees
+ */
+export type User$employeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
  * User without action
  */
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1259,4 +1723,8 @@ export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
 }

@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/Database/prisma.service';
 import { Prisma, User } from 'src/generated/prisma/client';
 import { PasswordService } from './password.service';
+import { Role } from 'src/enum/Roles';
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
@@ -66,15 +67,67 @@ export class UserService {
     }
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async createOwner(data: {
+    name: string;
+    lastName: string;
+    phone: string;
+    email: string;
+    password: string;
+    role: Role;
+  }): Promise<User> {
+    this.logger.log(`Registrando nuevo OWNER con email: ${data.email}`);
+
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          ...data,
+          ownerId: null,
+        },
+      });
+
+      this.logger.log(`OWNER creado con ID: ${user.id}`);
+      return user;
+    } catch (error: any) {
+      this.logger.error(`Error registrando OWNER`, error.stack);
+      throw error;
+    }
+  }
+
+  async createUser(creator: User, data: Prisma.UserUncheckedCreateInput): Promise<User> {
     this.logger.log(`Creando usuario con email: ${data.email}`);
 
     try {
+      // 1. Validar permisos
+      if (creator.role === Role.EMPLOYEE) {
+        throw new Error('No tenés permisos para crear usuarios');
+      }
+
+      // 2. Determinar ownerId
+      let ownerId: number | null = null;
+
+      if (creator.role === Role.OWNER) {
+        // Owner crea usuarios para su tenant
+        ownerId = creator.id;
+      }
+
+      if (creator.role === Role.SUPERVISOR) {
+        // Supervisor solo puede crear empleados
+        if (data.role !== Role.EMPLOYEE) {
+          throw new Error('Un supervisor solo puede crear empleados');
+        }
+        ownerId = creator.ownerId!;
+      }
+
+      // 3. Hashear password
       const hashedPassword = await this.passwordService.hash(data.password);
+
+      // 4. Crear usuario
       const user = await this.prisma.user.create({
         data: {
           ...data,
           password: hashedPassword,
+          role: data.role ?? Role.EMPLOYEE,
+          ownerId,
         },
       });
 
@@ -85,6 +138,7 @@ export class UserService {
       throw error;
     }
   }
+
   async updateUser(params: {
     where: Prisma.UserWhereUniqueInput;
     data: Prisma.UserUpdateInput;

@@ -6,6 +6,8 @@ import {
   Param,
   Patch,
   Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserModel } from 'src/generated/prisma/models';
@@ -16,14 +18,24 @@ import {
   UserResponseDto,
 } from './dto/user.dto';
 import { plainToInstance } from 'class-transformer';
+import { Roles } from 'src/common/decorators/Roles';
+import { Role } from 'src/enum/Roles';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/common/guards/RolesGuard';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @Post('new')
-  async signupUser(@Body() userData: UserCreateDto): Promise<UserModel> {
-    return this.userService.createUser(userData);
-  }
+
+@UseGuards(JwtGuard, RolesGuard)
+@Roles(Role.OWNER, Role.SUPERVISOR)
+@Post('new')
+createUser(@Req() req, @Body() dto: UserCreateDto) {
+  console.log('REQ USER:', req.user);
+  return this.userService.createUser(req.user, dto);
+}
+
+
   @Get(`:id`)
   async getUser(@Param(`id`) id: string) {
     return this.userService.user({ id: Number(id) });

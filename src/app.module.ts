@@ -11,6 +11,8 @@ import { WHATSAPP_SENDER } from './service';
 import {env} from './config/env';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { WhatsappSenderModule } from './whatsapp-sender/whatsapp-sender.module';
+import { TemplateModule } from './template/template.module';
+import { BillingModule } from './billing/billing.module';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { WhatsappSenderModule } from './whatsapp-sender/whatsapp-sender.module';
     AuthModule,
     WebhookModule,
     WhatsappSenderModule,
+    TemplateModule,
+    BillingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

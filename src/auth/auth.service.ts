@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { User } from "src/generated/prisma/client";
-import { PasswordService } from "src/user/password.service";
-import { UserService } from "src/user/user.service";
+import { Injectable, ConflictException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/generated/prisma/client';
+import { PasswordService } from 'src/user/password.service';
+import { UserService } from 'src/user/user.service';
+import { Role } from 'src/enum/Roles';
 
 @Injectable()
 export class AuthService {
@@ -20,8 +21,35 @@ export class AuthService {
     return isMatch ? user : null;
   }
 
+  async register(data: {
+    name: string;
+    lastName: string;
+    phone: string;
+    email: string;
+    password: string;
+  }): Promise<User> {
+    const existing = await this.usersService.findByEmail(data.email);
+    if (existing) {
+      throw new ConflictException('Ya existe un usuario con ese email');
+    }
+
+    // El registro público siempre crea un OWNER sin ownerId
+    const hashedPassword = await this.passwordService.hash(data.password);
+
+    return this.usersService.createOwner({
+      ...data,
+      password: hashedPassword,
+      role: Role.OWNER,
+    });
+  }
+
   async login(user: User) {
-    const payload = { sub: user.id, email: user.email };
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      ownerId: user.ownerId,
+    };
 
     const accessToken = await this.jwt.signAsync(payload, {
       expiresIn: '15m',

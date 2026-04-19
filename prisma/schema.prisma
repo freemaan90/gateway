@@ -13,12 +13,25 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  name     String
-  lastName String
-  phone    String
-  password String
-  refreshToken  String?  // <- opcional
+enum Role {
+  OWNER
+  SUPERVISOR
+  EMPLOYEE
 }
+
+model User {
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  name         String
+  lastName     String
+  phone        String
+  password     String
+  refreshToken String?
+  role         Role    @default(EMPLOYEE)
+
+  ownerId      Int?        // <- el dueño del empleado
+  owner        User?       @relation("OwnerEmployees", fields: [ownerId], references: [id])
+  employees    User[]      @relation("OwnerEmployees")
+}
+
+

@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ConfigService } from '@nestjs/config';
 import cookieParser from 'cookie-parser';
 
@@ -38,7 +39,9 @@ app.enableCors({
   );
 
   app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalFilters(new ValidationExceptionFilter());
+  // HttpExceptionFilter va primero (más genérico), ValidationExceptionFilter va último (más específico)
+  // NestJS aplica filtros de último a primero, así que ValidationExceptionFilter tiene prioridad sobre BadRequestException
+  app.useGlobalFilters(new HttpExceptionFilter(), new ValidationExceptionFilter());
 
   await app.listen(port);
 
