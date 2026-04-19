@@ -14,15 +14,7 @@ import { RefreshGuard } from './guards/refresh.guard';
 import type { CookieOptions, Response } from 'express';
 import { LoginDto } from './dtos/login.dto';
 import { env } from 'src/config/env';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-
-class RegisterDto {
-  @IsString() @IsNotEmpty() name!: string;
-  @IsString() @IsNotEmpty() lastName!: string;
-  @IsString() @IsNotEmpty() phone!: string;
-  @IsEmail() @IsNotEmpty() email!: string;
-  @IsString() @IsNotEmpty() password!: string;
-}
+import { RegisterDto } from './dtos/register.dto';
 
 @Controller('auth')
 export class AuthController {

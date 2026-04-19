@@ -27,6 +27,8 @@ export class AuthService {
     phone: string;
     email: string;
     password: string;
+    company: string;
+    companyLogo?: string;
   }): Promise<User> {
     const existing = await this.usersService.findByEmail(data.email);
     if (existing) {

@@ -46,6 +46,8 @@ export type UserMinAggregateOutputType = {
   refreshToken: string | null
   role: $Enums.Role | null
   ownerId: number | null
+  company: string | null
+  companyLogo: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -58,6 +60,8 @@ export type UserMaxAggregateOutputType = {
   refreshToken: string | null
   role: $Enums.Role | null
   ownerId: number | null
+  company: string | null
+  companyLogo: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -70,6 +74,8 @@ export type UserCountAggregateOutputType = {
   refreshToken: number
   role: number
   ownerId: number
+  company: number
+  companyLogo: number
   _all: number
 }
 
@@ -94,6 +100,8 @@ export type UserMinAggregateInputType = {
   refreshToken?: true
   role?: true
   ownerId?: true
+  company?: true
+  companyLogo?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -106,6 +114,8 @@ export type UserMaxAggregateInputType = {
   refreshToken?: true
   role?: true
   ownerId?: true
+  company?: true
+  companyLogo?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -118,6 +128,8 @@ export type UserCountAggregateInputType = {
   refreshToken?: true
   role?: true
   ownerId?: true
+  company?: true
+  companyLogo?: true
   _all?: true
 }
 
@@ -217,6 +229,8 @@ export type UserGroupByOutputType = {
   refreshToken: string | null
   role: $Enums.Role
   ownerId: number | null
+  company: string
+  companyLogo: string | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -252,6 +266,8 @@ export type UserWhereInput = {
   refreshToken?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   ownerId?: Prisma.IntNullableFilter<"User"> | number | null
+  company?: Prisma.StringFilter<"User"> | string
+  companyLogo?: Prisma.StringNullableFilter<"User"> | string | null
   owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   employees?: Prisma.UserListRelationFilter
 }
@@ -266,6 +282,8 @@ export type UserOrderByWithRelationInput = {
   refreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  company?: Prisma.SortOrder
+  companyLogo?: Prisma.SortOrderInput | Prisma.SortOrder
   owner?: Prisma.UserOrderByWithRelationInput
   employees?: Prisma.UserOrderByRelationAggregateInput
 }
@@ -283,6 +301,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   refreshToken?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   ownerId?: Prisma.IntNullableFilter<"User"> | number | null
+  company?: Prisma.StringFilter<"User"> | string
+  companyLogo?: Prisma.StringNullableFilter<"User"> | string | null
   owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   employees?: Prisma.UserListRelationFilter
 }, "id" | "email">
@@ -297,6 +317,8 @@ export type UserOrderByWithAggregationInput = {
   refreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  company?: Prisma.SortOrder
+  companyLogo?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -317,6 +339,8 @@ export type UserScalarWhereWithAggregatesInput = {
   refreshToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   ownerId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
+  company?: Prisma.StringWithAggregatesFilter<"User"> | string
+  companyLogo?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -327,6 +351,8 @@ export type UserCreateInput = {
   password: string
   refreshToken?: string | null
   role?: $Enums.Role
+  company?: string
+  companyLogo?: string | null
   owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
 }
@@ -341,6 +367,8 @@ export type UserUncheckedCreateInput = {
   refreshToken?: string | null
   role?: $Enums.Role
   ownerId?: number | null
+  company?: string
+  companyLogo?: string | null
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
 }
 
@@ -352,6 +380,8 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
 }
@@ -366,6 +396,8 @@ export type UserUncheckedUpdateInput = {
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
@@ -379,6 +411,8 @@ export type UserCreateManyInput = {
   refreshToken?: string | null
   role?: $Enums.Role
   ownerId?: number | null
+  company?: string
+  companyLogo?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -389,6 +423,8 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -401,6 +437,8 @@ export type UserUncheckedUpdateManyInput = {
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserNullableScalarRelationFilter = {
@@ -428,6 +466,8 @@ export type UserCountOrderByAggregateInput = {
   refreshToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
+  company?: Prisma.SortOrder
+  companyLogo?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -445,6 +485,8 @@ export type UserMaxOrderByAggregateInput = {
   refreshToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
+  company?: Prisma.SortOrder
+  companyLogo?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -457,6 +499,8 @@ export type UserMinOrderByAggregateInput = {
   refreshToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
+  company?: Prisma.SortOrder
+  companyLogo?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -558,6 +602,8 @@ export type UserCreateWithoutEmployeesInput = {
   password: string
   refreshToken?: string | null
   role?: $Enums.Role
+  company?: string
+  companyLogo?: string | null
   owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
 }
 
@@ -571,6 +617,8 @@ export type UserUncheckedCreateWithoutEmployeesInput = {
   refreshToken?: string | null
   role?: $Enums.Role
   ownerId?: number | null
+  company?: string
+  companyLogo?: string | null
 }
 
 export type UserCreateOrConnectWithoutEmployeesInput = {
@@ -586,6 +634,8 @@ export type UserCreateWithoutOwnerInput = {
   password: string
   refreshToken?: string | null
   role?: $Enums.Role
+  company?: string
+  companyLogo?: string | null
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
 }
 
@@ -598,6 +648,8 @@ export type UserUncheckedCreateWithoutOwnerInput = {
   password: string
   refreshToken?: string | null
   role?: $Enums.Role
+  company?: string
+  companyLogo?: string | null
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
 }
 
@@ -630,6 +682,8 @@ export type UserUpdateWithoutEmployeesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
 }
 
@@ -643,6 +697,8 @@ export type UserUncheckedUpdateWithoutEmployeesInput = {
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUpsertWithWhereUniqueWithoutOwnerInput = {
@@ -674,6 +730,8 @@ export type UserScalarWhereInput = {
   refreshToken?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   ownerId?: Prisma.IntNullableFilter<"User"> | number | null
+  company?: Prisma.StringFilter<"User"> | string
+  companyLogo?: Prisma.StringNullableFilter<"User"> | string | null
 }
 
 export type UserCreateManyOwnerInput = {
@@ -685,6 +743,8 @@ export type UserCreateManyOwnerInput = {
   password: string
   refreshToken?: string | null
   role?: $Enums.Role
+  company?: string
+  companyLogo?: string | null
 }
 
 export type UserUpdateWithoutOwnerInput = {
@@ -695,6 +755,8 @@ export type UserUpdateWithoutOwnerInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
 }
 
@@ -707,6 +769,8 @@ export type UserUncheckedUpdateWithoutOwnerInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
@@ -719,6 +783,8 @@ export type UserUncheckedUpdateManyWithoutOwnerInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -762,6 +828,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   refreshToken?: boolean
   role?: boolean
   ownerId?: boolean
+  company?: boolean
+  companyLogo?: boolean
   owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
   employees?: boolean | Prisma.User$employeesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -777,6 +845,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   refreshToken?: boolean
   role?: boolean
   ownerId?: boolean
+  company?: boolean
+  companyLogo?: boolean
   owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -790,6 +860,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   refreshToken?: boolean
   role?: boolean
   ownerId?: boolean
+  company?: boolean
+  companyLogo?: boolean
   owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -803,9 +875,11 @@ export type UserSelectScalar = {
   refreshToken?: boolean
   role?: boolean
   ownerId?: boolean
+  company?: boolean
+  companyLogo?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "phone" | "password" | "refreshToken" | "role" | "ownerId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "phone" | "password" | "refreshToken" | "role" | "ownerId" | "company" | "companyLogo", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
   employees?: boolean | Prisma.User$employeesArgs<ExtArgs>
@@ -834,6 +908,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     refreshToken: string | null
     role: $Enums.Role
     ownerId: number | null
+    company: string
+    companyLogo: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1268,6 +1344,8 @@ export interface UserFieldRefs {
   readonly refreshToken: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly ownerId: Prisma.FieldRef<"User", 'Int'>
+  readonly company: Prisma.FieldRef<"User", 'String'>
+  readonly companyLogo: Prisma.FieldRef<"User", 'String'>
 }
     
 

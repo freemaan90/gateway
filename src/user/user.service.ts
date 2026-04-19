@@ -74,6 +74,8 @@ export class UserService {
     email: string;
     password: string;
     role: Role;
+    company: string;
+    companyLogo?: string;
   }): Promise<User> {
     this.logger.log(`Registrando nuevo OWNER con email: ${data.email}`);
 
@@ -104,10 +106,14 @@ export class UserService {
 
       // 2. Determinar ownerId
       let ownerId: number | null = null;
+      let company: string | undefined = undefined;
+      let companyLogo: string | null | undefined = undefined;
 
       if (creator.role === Role.OWNER) {
         // Owner crea usuarios para su tenant
         ownerId = creator.id;
+        company = creator.company ?? undefined;
+        companyLogo = creator.companyLogo;
       }
 
       if (creator.role === Role.SUPERVISOR) {
@@ -116,6 +122,8 @@ export class UserService {
           throw new Error('Un supervisor solo puede crear empleados');
         }
         ownerId = creator.ownerId!;
+        company = creator.company!;
+        companyLogo = creator.companyLogo!;
       }
 
       // 3. Hashear password
@@ -128,6 +136,8 @@ export class UserService {
           password: hashedPassword,
           role: data.role ?? Role.EMPLOYEE,
           ownerId,
+          company,
+          companyLogo,
         },
       });
 
