@@ -1,8 +1,10 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
@@ -10,7 +12,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserModel } from 'src/generated/prisma/models';
 import {
   ChangePasswordDto,
   UpdateUserDto,
@@ -25,25 +26,47 @@ import { RolesGuard } from 'src/common/guards/RolesGuard';
 
 @Controller('user')
 export class UserController {
+  private readonly logger = new Logger('User');
+
   constructor(private readonly userService: UserService) {}
 
-@UseGuards(JwtGuard, RolesGuard)
-@Roles(Role.OWNER, Role.SUPERVISOR)
-@Post('new')
-createUser(@Req() req, @Body() dto: UserCreateDto) {
-  console.log('REQ USER:', req.user);
-  return this.userService.createUser(req.user, dto);
-}
-
-
-  @Get(`:id`)
-  async getUser(@Param(`id`) id: string) {
-    return this.userService.user({ id: Number(id) });
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles(Role.OWNER, Role.SUPERVISOR)
+  @Post('new')
+  createUser(@Req() req, @Body() dto: UserCreateDto) {
+    console.log('REQ USER:', req.user);
+    return this.userService.createUser(req.user, dto);
   }
+
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles(Role.OWNER, Role.SUPERVISOR)
+  @Post('new-employee')
+  createEmployee(@Req() req, @Body() dto: UserCreateDto) {
+    console.log('REQ USER:', req.user);
+    return this.userService.createUser(req.user, dto);
+  }
+
   @Get('all-users')
   async getUsers() {
+    this.logger.log('Obteniendo todos los usuarios');
     const users = await this.userService.findAll();
     return plainToInstance(UserResponseDto, users);
+  }
+
+  @Get(':id')
+  async getUser(@Param('id') id: string) {
+    const parsedId = Number(id);
+
+    if (isNaN(parsedId)) {
+      throw new BadRequestException('El ID debe ser un número válido');
+    }
+
+    return this.userService.user({ id: parsedId });
+  }
+
+  @Get(`employees/:id`)
+  async getEmployees(@Param(`id`) ownerId: string) {
+    return this.userService.findEmployees(Number(ownerId));
   }
 
   @Patch('reset-password')

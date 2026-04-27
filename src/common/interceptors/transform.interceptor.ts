@@ -4,7 +4,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { instanceToPlain } from 'class-transformer';
 
 @Injectable()
@@ -14,6 +14,10 @@ export class TransformInterceptor implements NestInterceptor {
       map((data) => {
         // Aplica class-transformer a TODAS las respuestas
         return instanceToPlain(data);
+      }),
+      catchError((err) => {
+        // NO tocar el error, dejar que el HttpExceptionFilter lo maneje
+        return throwError(() => err);
       }),
     );
   }

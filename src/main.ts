@@ -23,12 +23,11 @@ async function bootstrap() {
   // Leer variables
   const port = configService.get<number>('PORT') ?? 3000;
   // Configurar CORS usando config
-app.enableCors({
-  origin: 'http://localhost:3000',
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
-});
-
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -41,7 +40,10 @@ app.enableCors({
   app.useGlobalInterceptors(new TransformInterceptor());
   // HttpExceptionFilter va primero (más genérico), ValidationExceptionFilter va último (más específico)
   // NestJS aplica filtros de último a primero, así que ValidationExceptionFilter tiene prioridad sobre BadRequestException
-  app.useGlobalFilters(new HttpExceptionFilter(), new ValidationExceptionFilter());
+  app.useGlobalFilters(
+    new HttpExceptionFilter(),
+    new ValidationExceptionFilter(),
+  );
 
   await app.listen(port);
 

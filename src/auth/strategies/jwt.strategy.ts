@@ -20,13 +20,15 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-async validate(payload: any) {
-  return {
-    sub: payload.sub, // <-- CAMBIO CLAVE
-    email: payload.email,
-    role: payload.role,
-    ownerId: payload.ownerId ?? null,
-  };
-}
-
+  async validate(payload: any) {
+    console.log('JWT Payload:', payload); // <-- LOG PAYLOAD
+    return {
+      id: payload.sub, // ✔️ id correcto
+      email: payload.email,
+      role: payload.role,
+      ownerId: payload.ownerId, // ✔️ usar el valor real del JWT
+      company: payload.company, // ✔️ agregar
+      companyLogo: payload.companyLogo, // ✔️ agregar
+    };
+  }
 }

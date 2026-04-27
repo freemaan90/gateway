@@ -71,7 +71,8 @@ export class AuthController {
   @UseGuards(JwtGuard)
   @Get('me')
   async me(@Req() req) {
-    return this.authService.getProfile(req.user.sub);
+    console.log("REQ.USER EN CONTROLLER:", req.user);
+    return this.authService.getProfile(req.user.id);
   }
 
   // Helper interno para no repetir cookies

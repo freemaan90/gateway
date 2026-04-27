@@ -117,8 +117,12 @@ export class UserService {
     }
   }
 
-  async createUser(creator: User, data: Prisma.UserUncheckedCreateInput): Promise<User> {
+  async createUser(
+    creator: User,
+    data: Prisma.UserUncheckedCreateInput,
+  ): Promise<User> {
     this.logger.log(`Creando usuario con email: ${data.email}`);
+    this.logger.log(`Creator: ${JSON.stringify(creator)}`)
 
     try {
       // 1. Validar permisos
@@ -143,7 +147,7 @@ export class UserService {
         if (data.role !== Role.EMPLOYEE) {
           throw new Error('Un supervisor solo puede crear empleados');
         }
-        ownerId = creator.ownerId!;
+        ownerId = Number(creator.ownerId)!;
         company = creator.company!;
         companyLogo = creator.companyLogo!;
       }
@@ -318,5 +322,27 @@ export class UserService {
     this.logger.log(`Contraseña reseteada para ${email}`);
 
     return { message: 'Contraseña actualizada correctamente' };
+  }
+
+  async findEmployees(ownerId: number): Promise<User[]> {
+    this.logger.log(`Buscando empleados para ownerId: ${ownerId}`);
+
+    try {
+      const employees = await this.prisma.user.findMany({
+        where: {
+          ownerId,
+        },
+      });
+      this.logger.log(
+        `Empleados encontrados para ownerId ${ownerId}: ${employees.length}`,
+      );
+      return employees;
+    } catch (error: any) {
+      this.logger.error(
+        `Error buscando empleados para ownerId ${ownerId}`,
+        error.stack,
+      );
+      throw error;
+    }
   }
 }
