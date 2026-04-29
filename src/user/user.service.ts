@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/Database/prisma.service';
 import { Prisma, User } from 'src/generated/prisma/client';
-import { PasswordService } from './password.service';
+import { PasswordService } from './password/password.service';
 import { Role } from 'src/enum/Roles';
 @Injectable()
 export class UserService {

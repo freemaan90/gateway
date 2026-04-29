@@ -13,7 +13,11 @@ export const env = {
   port: Number(process.env.PORT ?? 3000),
   BFF_WHATSAPP_SENDER_HOST: required('BFF_WHATSAPP_SENDER_HOST'),
   BFF_WHATSAPP_SENDER_PORT: Number(required('BFF_WHATSAPP_SENDER_PORT')),
-
+  SMTP_HOST: required('SMTP_HOST'),
+  SMTP_PORT: Number(required('SMTP_PORT')),
+  SMTP_USER: required('SMTP_USER'),
+  SMTP_PASS: required('SMTP_PASS'),
+  FRONTEND_URL: required('FRONTEND_URL'),
   databaseUrl: required('DATABASE_URL'),
 
   postgres: {
@@ -34,5 +38,6 @@ export const env = {
 
   nodeEnv: process.env.NODE_ENV ?? 'development',
 
-  VERIFY_TOKEN: required('VERIFY_TOKEN')
+  VERIFY_TOKEN: required('VERIFY_TOKEN'),
+  REDIS_URL: required('REDIS_URL'),
 };

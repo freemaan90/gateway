@@ -25,7 +25,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as fc from 'fast-check';
 import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
-import { PasswordService } from 'src/user/password.service';
+import { PasswordService } from 'src/user/password/password.service';
 import { PrismaService } from 'src/Database/prisma.service';
 import { Role } from 'src/enum/Roles';
 import { User } from 'src/generated/prisma/client';

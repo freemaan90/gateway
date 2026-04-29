@@ -13,6 +13,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { WhatsappSenderModule } from './whatsapp-sender/whatsapp-sender.module';
 import { TemplateModule } from './template/template.module';
 import { BillingModule } from './billing/billing.module';
+import { RedisModule } from './redis/redis.module';
+import { PasswordModule } from './user/password/password.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -37,6 +40,9 @@ import { BillingModule } from './billing/billing.module';
     WhatsappSenderModule,
     TemplateModule,
     BillingModule,
+    RedisModule,
+    PasswordModule,
+    EmailModule
   ],
   controllers: [AppController],
   providers: [AppService],

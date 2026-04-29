@@ -34,7 +34,6 @@ export class UserController {
   @Roles(Role.OWNER, Role.SUPERVISOR)
   @Post('new')
   createUser(@Req() req, @Body() dto: UserCreateDto) {
-    console.log('REQ USER:', req.user);
     return this.userService.createUser(req.user, dto);
   }
 
@@ -42,7 +41,6 @@ export class UserController {
   @Roles(Role.OWNER, Role.SUPERVISOR)
   @Post('new-employee')
   createEmployee(@Req() req, @Body() dto: UserCreateDto) {
-    console.log('REQ USER:', req.user);
     return this.userService.createUser(req.user, dto);
   }
 

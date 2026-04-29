@@ -1,7 +1,7 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/generated/prisma/client';
-import { PasswordService } from 'src/user/password.service';
+import { PasswordService } from 'src/user/password/password.service';
 import { UserService } from 'src/user/user.service';
 import { Role } from 'src/enum/Roles';
 
