@@ -1,19 +1,23 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { TemplateService } from './template.service';
 import { Roles } from 'src/common/decorators/Roles';
+import { CreateTemplateDto } from './dto/template.dto';
 
 @Controller('template')
 export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
-  @Get()
+
+  @Get(`:id`)
   @Roles('OWNER', 'SUPERVISOR', 'EMPLOYEE')
-  getTemplates() {
-    return this.templateService.findAll();
+  getTemplates(@Param('id') id: string) {
+    return this.templateService.findAll(id);
   }
 
   @Post()
   @Roles('OWNER', 'SUPERVISOR')
-  createTemplate() {
-    return this.templateService.create();
+  createTemplate(
+    @Body() body: CreateTemplateDto,
+  ) {
+    return this.templateService.create(body);
   }
 }

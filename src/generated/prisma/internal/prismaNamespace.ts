@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.6.0
- * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.6.0",
-  engine: "75cbdc1eb7150937890ad5465d861175c6624711"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 /**
@@ -384,7 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Template: 'Template'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +401,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user"
+    modelProps: "user" | "template"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Template: {
+      payload: Prisma.$TemplatePayload<ExtArgs>
+      fields: Prisma.TemplateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TemplateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TemplateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>
+        }
+        findFirst: {
+          args: Prisma.TemplateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TemplateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>
+        }
+        findMany: {
+          args: Prisma.TemplateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>[]
+        }
+        create: {
+          args: Prisma.TemplateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>
+        }
+        createMany: {
+          args: Prisma.TemplateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TemplateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>[]
+        }
+        delete: {
+          args: Prisma.TemplateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>
+        }
+        update: {
+          args: Prisma.TemplateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>
+        }
+        deleteMany: {
+          args: Prisma.TemplateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TemplateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TemplateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>[]
+        }
+        upsert: {
+          args: Prisma.TemplateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TemplatePayload>
+        }
+        aggregate: {
+          args: Prisma.TemplateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTemplate>
+        }
+        groupBy: {
+          args: Prisma.TemplateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TemplateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TemplateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TemplateCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -532,6 +607,17 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const TemplateScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  createdAt: 'createdAt',
+  userId: 'userId'
+} as const
+
+export type TemplateScalarFieldEnum = (typeof TemplateScalarFieldEnum)[keyof typeof TemplateScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -603,6 +689,20 @@ export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'Role[]'
  */
 export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -712,9 +812,25 @@ export type PrismaClientOptions = ({
    * ```
    */
   comments?: runtime.SqlCommenterPlugin[]
+  /**
+   * Optional maximum size for the query plan cache. If not provided, a default size will be used.
+   * A value of `0` can be used to disable the cache entirely. A higher cache size can improve
+   * performance for applications that execute a large number of unique queries, while a smaller
+   * cache size can reduce memory usage.
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   queryPlanCacheMaxSize: 100,
+   * })
+   * ```
+   */
+  queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  template?: Prisma.TemplateOmit
 }
 
 /* Types for Logging */

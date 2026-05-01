@@ -51,7 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Template: 'Template'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -85,6 +86,17 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const TemplateScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  createdAt: 'createdAt',
+  userId: 'userId'
+} as const
+
+export type TemplateScalarFieldEnum = (typeof TemplateScalarFieldEnum)[keyof typeof TemplateScalarFieldEnum]
 
 
 export const SortOrder = {
