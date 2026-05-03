@@ -8,7 +8,6 @@ import {
   Param,
   Patch,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -20,6 +19,8 @@ import {
 } from './dto/user.dto';
 import { plainToInstance } from 'class-transformer';
 import { Roles } from 'src/common/decorators/Roles';
+import { User } from 'src/common/decorators/user.decorator';
+import type { AuthUser } from 'src/common/decorators/user.decorator';
 import { Role } from 'src/enum/Roles';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/common/guards/RolesGuard';
@@ -33,15 +34,15 @@ export class UserController {
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.OWNER, Role.SUPERVISOR)
   @Post('new')
-  createUser(@Req() req, @Body() dto: UserCreateDto) {
-    return this.userService.createUser(req.user, dto);
+  createUser(@User() user: AuthUser, @Body() dto: UserCreateDto) {
+    return this.userService.createUser(user, dto);
   }
 
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.OWNER, Role.SUPERVISOR)
   @Post('new-employee')
-  createEmployee(@Req() req, @Body() dto: UserCreateDto) {
-    return this.userService.createUser(req.user, dto);
+  createEmployee(@User() user: AuthUser, @Body() dto: UserCreateDto) {
+    return this.userService.createUser(user, dto);
   }
 
   @Get('all-users')

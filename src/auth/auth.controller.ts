@@ -15,6 +15,7 @@ import type { CookieOptions, Response } from 'express';
 import { LoginDto } from './dtos/login.dto';
 import { env } from 'src/config/env';
 import { RegisterDto } from './dtos/register.dto';
+import { User } from 'src/common/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -70,8 +71,8 @@ export class AuthController {
   // PROFILE
   @UseGuards(JwtGuard)
   @Get('me')
-  async me(@Req() req) {
-    return this.authService.getProfile(req.user.id);
+  async me(@User() user: { id: number }) {
+    return this.authService.getProfile(user.id);
   }
 
   // Helper interno para no repetir cookies

@@ -3,6 +3,7 @@ import { PrismaService } from 'src/Database/prisma.service';
 import { Prisma, User } from 'src/generated/prisma/client';
 import { PasswordService } from './password/password.service';
 import { Role } from 'src/enum/Roles';
+import { AuthUser } from 'src/common/decorators/user.decorator';
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
@@ -118,7 +119,7 @@ export class UserService {
   }
 
   async createUser(
-    creator: User,
+    creator: AuthUser,
     data: Prisma.UserUncheckedCreateInput,
   ): Promise<User> {
     this.logger.log(`Creando usuario con email: ${data.email}`);
