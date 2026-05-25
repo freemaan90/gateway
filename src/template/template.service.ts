@@ -1,6 +1,6 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from 'src/Database/prisma.service';
-import { CreateTemplateDto } from './dto/template.dto';
+import { CreateTemplateDto, UpdateTemplateDto } from './dto/template.dto';
 import { AuthUser } from 'src/common/decorators/user.decorator';
 
 @Injectable()
@@ -45,13 +45,10 @@ export class TemplateService {
     });
   }
 
-  async update(id: string) {
+  async update(id: string, data: UpdateTemplateDto) {
     return this.prisma.template.update({
       where: { id: Number(id) },
-      data: {
-        title: 'Updated Template',
-        content: 'This is the updated content of the template.',
-      },
+      data,
     });
   }
 }

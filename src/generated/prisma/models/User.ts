@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model User
@@ -271,6 +271,7 @@ export type UserWhereInput = {
   owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   employees?: Prisma.UserListRelationFilter
   templates?: Prisma.TemplateListRelationFilter
+  campaigns?: Prisma.CampaignListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -288,6 +289,7 @@ export type UserOrderByWithRelationInput = {
   owner?: Prisma.UserOrderByWithRelationInput
   employees?: Prisma.UserOrderByRelationAggregateInput
   templates?: Prisma.TemplateOrderByRelationAggregateInput
+  campaigns?: Prisma.CampaignOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -308,6 +310,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   employees?: Prisma.UserListRelationFilter
   templates?: Prisma.TemplateListRelationFilter
+  campaigns?: Prisma.CampaignListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -359,6 +362,7 @@ export type UserCreateInput = {
   owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
+  campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -375,6 +379,7 @@ export type UserUncheckedCreateInput = {
   companyLogo?: string | null
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
+  campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -390,6 +395,7 @@ export type UserUpdateInput = {
   owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
+  campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -406,6 +412,7 @@ export type UserUncheckedUpdateInput = {
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
+  campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -620,6 +627,20 @@ export type UserUpdateOneRequiredWithoutTemplatesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTemplatesInput, Prisma.UserUpdateWithoutTemplatesInput>, Prisma.UserUncheckedUpdateWithoutTemplatesInput>
 }
 
+export type UserCreateNestedOneWithoutCampaignsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCampaignsInput, Prisma.UserUncheckedCreateWithoutCampaignsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCampaignsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCampaignsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCampaignsInput, Prisma.UserUncheckedCreateWithoutCampaignsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCampaignsInput
+  upsert?: Prisma.UserUpsertWithoutCampaignsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCampaignsInput, Prisma.UserUpdateWithoutCampaignsInput>, Prisma.UserUncheckedUpdateWithoutCampaignsInput>
+}
+
 export type UserCreateWithoutEmployeesInput = {
   email: string
   name: string
@@ -632,6 +653,7 @@ export type UserCreateWithoutEmployeesInput = {
   companyLogo?: string | null
   owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
   templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
+  campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEmployeesInput = {
@@ -647,6 +669,7 @@ export type UserUncheckedCreateWithoutEmployeesInput = {
   company?: string
   companyLogo?: string | null
   templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
+  campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEmployeesInput = {
@@ -666,6 +689,7 @@ export type UserCreateWithoutOwnerInput = {
   companyLogo?: string | null
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
+  campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOwnerInput = {
@@ -681,6 +705,7 @@ export type UserUncheckedCreateWithoutOwnerInput = {
   companyLogo?: string | null
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
+  campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOwnerInput = {
@@ -716,6 +741,7 @@ export type UserUpdateWithoutEmployeesInput = {
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
   templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
+  campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmployeesInput = {
@@ -731,6 +757,7 @@ export type UserUncheckedUpdateWithoutEmployeesInput = {
   company?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
+  campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutOwnerInput = {
@@ -778,6 +805,7 @@ export type UserCreateWithoutTemplatesInput = {
   companyLogo?: string | null
   owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTemplatesInput = {
@@ -793,6 +821,7 @@ export type UserUncheckedCreateWithoutTemplatesInput = {
   company?: string
   companyLogo?: string | null
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTemplatesInput = {
@@ -823,6 +852,7 @@ export type UserUpdateWithoutTemplatesInput = {
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTemplatesInput = {
@@ -838,6 +868,85 @@ export type UserUncheckedUpdateWithoutTemplatesInput = {
   company?: Prisma.StringFieldUpdateOperationsInput | string
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCampaignsInput = {
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+  company?: string
+  companyLogo?: string | null
+  owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
+  employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCampaignsInput = {
+  id?: number
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+  ownerId?: number | null
+  company?: string
+  companyLogo?: string | null
+  employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCampaignsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCampaignsInput, Prisma.UserUncheckedCreateWithoutCampaignsInput>
+}
+
+export type UserUpsertWithoutCampaignsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCampaignsInput, Prisma.UserUncheckedUpdateWithoutCampaignsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCampaignsInput, Prisma.UserUncheckedCreateWithoutCampaignsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCampaignsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCampaignsInput, Prisma.UserUncheckedUpdateWithoutCampaignsInput>
+}
+
+export type UserUpdateWithoutCampaignsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
+  employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCampaignsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyOwnerInput = {
@@ -865,6 +974,7 @@ export type UserUpdateWithoutOwnerInput = {
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
+  campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOwnerInput = {
@@ -880,6 +990,7 @@ export type UserUncheckedUpdateWithoutOwnerInput = {
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
+  campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutOwnerInput = {
@@ -903,11 +1014,13 @@ export type UserUncheckedUpdateManyWithoutOwnerInput = {
 export type UserCountOutputType = {
   employees: number
   templates: number
+  campaigns: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   employees?: boolean | UserCountOutputTypeCountEmployeesArgs
   templates?: boolean | UserCountOutputTypeCountTemplatesArgs
+  campaigns?: boolean | UserCountOutputTypeCountCampaignsArgs
 }
 
 /**
@@ -934,6 +1047,13 @@ export type UserCountOutputTypeCountTemplatesArgs<ExtArgs extends runtime.Types.
   where?: Prisma.TemplateWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CampaignWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -950,6 +1070,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
   employees?: boolean | Prisma.User$employeesArgs<ExtArgs>
   templates?: boolean | Prisma.User$templatesArgs<ExtArgs>
+  campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1002,6 +1123,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
   employees?: boolean | Prisma.User$employeesArgs<ExtArgs>
   templates?: boolean | Prisma.User$templatesArgs<ExtArgs>
+  campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1017,6 +1139,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     owner: Prisma.$UserPayload<ExtArgs> | null
     employees: Prisma.$UserPayload<ExtArgs>[]
     templates: Prisma.$TemplatePayload<ExtArgs>[]
+    campaigns: Prisma.$CampaignPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1427,6 +1550,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   owner<T extends Prisma.User$ownerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ownerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   employees<T extends Prisma.User$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   templates<T extends Prisma.User$templatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  campaigns<T extends Prisma.User$campaignsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1932,6 +2056,30 @@ export type User$templatesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.TemplateScalarFieldEnum | Prisma.TemplateScalarFieldEnum[]
+}
+
+/**
+ * User.campaigns
+ */
+export type User$campaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Campaign
+   */
+  select?: Prisma.CampaignSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Campaign
+   */
+  omit?: Prisma.CampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
+  where?: Prisma.CampaignWhereInput
+  orderBy?: Prisma.CampaignOrderByWithRelationInput | Prisma.CampaignOrderByWithRelationInput[]
+  cursor?: Prisma.CampaignWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CampaignScalarFieldEnum | Prisma.CampaignScalarFieldEnum[]
 }
 
 /**

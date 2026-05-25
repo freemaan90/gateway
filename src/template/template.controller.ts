@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete, Patch, UseGuards } from '@nestjs/common';
 import { TemplateService } from './template.service';
-import { CreateTemplateDto } from './dto/template.dto';
+import { CreateTemplateDto, UpdateTemplateDto } from './dto/template.dto';
 import { Roles } from 'src/common/decorators/Roles';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/common/guards/RolesGuard';
@@ -32,7 +32,7 @@ export class TemplateController {
 
   @Patch(`:id`)
   @Roles('OWNER', 'SUPERVISOR')
-  updateTemplate(@Param('id') id: string) {
-    return this.templateService.update(id);
+  updateTemplate(@Param('id') id: string, @Body() body: UpdateTemplateDto) {
+    return this.templateService.update(id, body);
   }
 }

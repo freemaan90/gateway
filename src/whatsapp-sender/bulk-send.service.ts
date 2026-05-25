@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { randomUUID } from 'crypto';
 import { catchError, firstValueFrom } from 'rxjs';
 import { WHATSAPP_SENDER } from 'src/service';
+import { CampaignService } from 'src/campaign/campaign.service';
 
 // Argentina is UTC-3, no DST
 const ARG_OFFSET_MS = -3 * 3_600_000;
@@ -28,6 +29,7 @@ export interface BulkJobStatus {
 interface BulkJob extends BulkJobStatus {
   sessionId: string;
   messages: BulkMessage[];
+  userId: number;
   finishedAt?: number; // timestamp for TTL cleanup
 }
 
@@ -39,6 +41,7 @@ export class BulkSendService implements OnModuleInit {
   constructor(
     @Inject(WHATSAPP_SENDER)
     private readonly whatsappSenderClient: ClientProxy,
+    private readonly campaignService: CampaignService,
   ) {}
 
   onModuleInit() {
@@ -53,12 +56,13 @@ export class BulkSendService implements OnModuleInit {
     }, 30 * 60 * 1000);
   }
 
-  createJob(sessionId: string, messages: BulkMessage[]): string {
+  createJob(sessionId: string, messages: BulkMessage[], userId: number): string {
     const jobId = randomUUID();
     const job: BulkJob = {
       jobId,
       sessionId,
       messages,
+      userId,
       status: 'processing',
       total: messages.length,
       done: 0,
@@ -143,5 +147,19 @@ export class BulkSendService implements OnModuleInit {
     this.logger.log(
       `BulkJob ${job.jobId} complete — ${job.done - job.failed.length} sent, ${job.failed.length} failed`,
     );
+
+    try {
+      await this.campaignService.create({
+        sessionId: job.sessionId,
+        total: job.total,
+        sent: job.done - job.failed.length,
+        failed: job.failed.length,
+        failedDetails: job.failed,
+        userId: job.userId,
+        finishedAt: new Date(),
+      });
+    } catch (err) {
+      this.logger.error(`BulkJob ${job.jobId} — failed to persist campaign: ${(err as Error).message}`);
+    }
   }
 }

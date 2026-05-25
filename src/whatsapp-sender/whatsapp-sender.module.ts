@@ -4,6 +4,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { WHATSAPP_SENDER } from 'src/service';
 import { env } from 'src/config/env';
 import { BulkSendService } from './bulk-send.service';
+import { CampaignModule } from 'src/campaign/campaign.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { BulkSendService } from './bulk-send.service';
         },
       },
     ]),
+    CampaignModule,
   ],
   controllers: [WhatsappSenderController],
   providers: [BulkSendService],

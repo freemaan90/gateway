@@ -35,8 +35,8 @@ model User {
 
   company     String     @default("")
   companyLogo String?    @default("")
-  // 👇 relación inversa obligatoria
   templates   Template[]
+  campaigns   Campaign[]
 }
 
 model Template {
@@ -44,6 +44,20 @@ model Template {
   title     String
   content   String
   createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Campaign {
+  id            Int       @id @default(autoincrement())
+  sessionId     String
+  total         Int
+  sent          Int
+  failed        Int
+  failedDetails Json      @default("[]")
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
 
   userId Int
   user   User @relation(fields: [userId], references: [id])

@@ -12,6 +12,7 @@ import {env} from './config/env';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { WhatsappSenderModule } from './whatsapp-sender/whatsapp-sender.module';
 import { TemplateModule } from './template/template.module';
+import { CampaignModule } from './campaign/campaign.module';
 import { BillingModule } from './billing/billing.module';
 import { RedisModule } from './redis/redis.module';
 import { PasswordModule } from './user/password/password.module';
@@ -40,6 +41,7 @@ import { UploadModule } from './upload/upload.module';
     WebhookModule,
     WhatsappSenderModule,
     TemplateModule,
+    CampaignModule,
     BillingModule,
     RedisModule,
     PasswordModule,

@@ -15,6 +15,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, firstValueFrom, retry } from 'rxjs';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { AuthUser, User } from 'src/common/decorators/user.decorator';
 import { WHATSAPP_SENDER } from 'src/service';
 import { BulkSendService } from './bulk-send.service';
 import { BulkSendDto } from './dtos/bulk-send.dto';
@@ -150,8 +151,9 @@ export class WhatsappSenderController {
   async bulkSend(
     @Param('sessionId') sessionId: string,
     @Body() body: BulkSendDto,
+    @User() user: AuthUser,
   ) {
-    const jobId = this.bulkSendService.createJob(sessionId, body.messages);
+    const jobId = this.bulkSendService.createJob(sessionId, body.messages, user.id);
     return { jobId };
   }
 

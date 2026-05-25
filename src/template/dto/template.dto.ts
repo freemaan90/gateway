@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateTemplateDto {
   @IsString()
@@ -10,4 +10,16 @@ export class CreateTemplateDto {
   @IsString()
   @IsNotEmpty()
   userId!: string;
+}
+
+export class UpdateTemplateDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  title?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  content?: string;
 }
