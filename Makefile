@@ -8,6 +8,12 @@ BLUE=\033[34m
 YELLOW=\033[33m
 CYAN=\033[36m
 
+# Runtime de contenedores — se ejecuta dentro de WSL (podman-machine-default)
+CONTAINER=wsl -d podman-machine-default -- sudo podman
+COMPOSE=wsl -d podman-machine-default -- sudo podman-compose \
+	--env-file $(CURDIR)/.env \
+	-f $(CURDIR)/docker-compose.yml
+
 # Servicios
 DB_SERVICE=postgres
 PGADMIN_SERVICE=pgadmin
@@ -26,38 +32,35 @@ help:
 # 🐳 DOCKER
 # ============================
 up: ## Levanta todos los servicios
-	docker compose up -d
+	$(COMPOSE) up -d
 
 down: ## Baja todos los servicios
-	docker compose down
+	$(COMPOSE) down
 
 status: ## Muestra el estado de los contenedores
-	docker compose ps
+	$(COMPOSE) ps
 
 logs-db: ## Logs de Postgres
-	docker compose logs -f $(DB_SERVICE)
-
-logs-pgadmin: ## Logs de pgAdmin
-	docker compose logs -f $(PGADMIN_SERVICE)
+	$(COMPOSE) logs -f $(DB_SERVICE)
 
 logs-redis: ## Logs de Redis
-	docker compose logs -f $(REDIS_SERVICE)
+	$(COMPOSE) logs -f $(REDIS_SERVICE)
 
 restart-db: ## Reinicia Postgres
-	docker compose restart $(DB_SERVICE)
+	$(COMPOSE) restart $(DB_SERVICE)
 
 restart-redis: ## Reinicia Redis
-	docker compose restart $(REDIS_SERVICE)
+	$(COMPOSE) restart $(REDIS_SERVICE)
 
 psql: ## Entra al psql dentro del contenedor
-	docker exec -it postgres_db psql -U $$POSTGRES_USER -d $$POSTGRES_DB
+	$(CONTAINER) exec -it postgres_db psql -U $$POSTGRES_USER -d $$POSTGRES_DB
 
 redis-cli: ## Entra al CLI de Redis
-	docker exec -it redis_server redis-cli
+	$(CONTAINER) exec -it redis_server redis-cli
 
 reset-db: ## Resetea la base (drop + recreate)
-	docker compose down -v
-	docker compose up -d
+	$(COMPOSE) down -v
+	$(COMPOSE) up -d
 
 # ============================
 # 🧬 PRISMA

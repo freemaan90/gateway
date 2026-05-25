@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
@@ -6,12 +7,18 @@ import { ValidationExceptionFilter } from './common/filters/validation-exception
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ConfigService } from '@nestjs/config';
 import cookieParser from 'cookie-parser';
+import { join } from 'path';
+import { mkdirSync } from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  const uploadsDir = join(process.cwd(), 'uploads');
+  mkdirSync(uploadsDir, { recursive: true });
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
   });
   app.use(cookieParser());
+  app.useStaticAssets(uploadsDir, { prefix: '/uploads' });
 
   const logger = new Logger('Gateway');
 
@@ -24,7 +31,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT') ?? 3000;
   // Configurar CORS usando config
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://localhost:4000'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
   });

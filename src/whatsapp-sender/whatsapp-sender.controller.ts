@@ -6,6 +6,7 @@ import {
   HttpCode,
   Inject,
   Logger,
+  NotFoundException,
   Param,
   Post,
   ServiceUnavailableException,
@@ -15,6 +16,8 @@ import { ClientProxy } from '@nestjs/microservices';
 import { catchError, firstValueFrom, retry } from 'rxjs';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { WHATSAPP_SENDER } from 'src/service';
+import { BulkSendService } from './bulk-send.service';
+import { BulkSendDto } from './dtos/bulk-send.dto';
 import { CreateSessionDto } from './dtos/create-session.dto';
 import { SendMessageDto } from './dtos/send-message.dto';
 
@@ -25,6 +28,7 @@ export class WhatsappSenderController {
   constructor(
     @Inject(WHATSAPP_SENDER)
     private readonly whatsappSenderClient: ClientProxy,
+    private readonly bulkSendService: BulkSendService,
   ) {}
 
   @Get('health')
@@ -138,6 +142,25 @@ export class WhatsappSenderController {
         service: 'whatsapp-sender',
       });
     }
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('sessions/:sessionId/bulk-send')
+  @HttpCode(202)
+  async bulkSend(
+    @Param('sessionId') sessionId: string,
+    @Body() body: BulkSendDto,
+  ) {
+    const jobId = this.bulkSendService.createJob(sessionId, body.messages);
+    return { jobId };
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('bulk-send/:jobId')
+  async getBulkSendStatus(@Param('jobId') jobId: string) {
+    const job = this.bulkSendService.getJob(jobId);
+    if (!job) throw new NotFoundException(`Job ${jobId} not found`);
+    return job;
   }
 
   @UseGuards(JwtGuard)

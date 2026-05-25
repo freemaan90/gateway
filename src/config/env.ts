@@ -37,6 +37,7 @@ export const env = {
   },
 
   nodeEnv: process.env.NODE_ENV ?? 'development',
+  backendUrl: process.env.BACKEND_URL ?? `http://localhost:${process.env.PORT ?? 3000}`,
 
   VERIFY_TOKEN: required('VERIFY_TOKEN'),
   REDIS_URL: required('REDIS_URL'),

@@ -75,7 +75,11 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   password?: string;
-  
+
+  @IsOptional()
+  @IsString()
+  companyLogo?: string;
+
   @IsOptional()
   @IsEnum(Role)
   role?: Role;

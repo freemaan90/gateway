@@ -16,6 +16,7 @@ import { BillingModule } from './billing/billing.module';
 import { RedisModule } from './redis/redis.module';
 import { PasswordModule } from './user/password/password.module';
 import { EmailModule } from './email/email.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -42,7 +43,8 @@ import { EmailModule } from './email/email.module';
     BillingModule,
     RedisModule,
     PasswordModule,
-    EmailModule
+    EmailModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

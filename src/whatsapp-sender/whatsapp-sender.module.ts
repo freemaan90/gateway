@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common';
 import { WhatsappSenderController } from './whatsapp-sender.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { WHATSAPP_SENDER } from 'src/service';
-import {env} from 'src/config/env';
+import { env } from 'src/config/env';
+import { BulkSendService } from './bulk-send.service';
+
 @Module({
   imports: [
     ClientsModule.register([
@@ -17,6 +19,6 @@ import {env} from 'src/config/env';
     ]),
   ],
   controllers: [WhatsappSenderController],
-  providers: [],
+  providers: [BulkSendService],
 })
 export class WhatsappSenderModule {}
