@@ -52,6 +52,7 @@ model Template {
 model Campaign {
   id            Int       @id @default(autoincrement())
   sessionId     String
+  templateTitle String?
   total         Int
   sent          Int
   failed        Int

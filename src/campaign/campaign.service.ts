@@ -3,6 +3,7 @@ import { PrismaService } from 'src/Database/prisma.service';
 
 interface CreateCampaignData {
   sessionId: string;
+  templateTitle?: string;
   total: number;
   sent: number;
   failed: number;
@@ -19,6 +20,7 @@ export class CampaignService {
     return this.prisma.campaign.create({
       data: {
         sessionId: data.sessionId,
+        templateTitle: data.templateTitle,
         total: data.total,
         sent: data.sent,
         failed: data.failed,

@@ -45,6 +45,7 @@ export type CampaignSumAggregateOutputType = {
 export type CampaignMinAggregateOutputType = {
   id: number | null
   sessionId: string | null
+  templateTitle: string | null
   total: number | null
   sent: number | null
   failed: number | null
@@ -56,6 +57,7 @@ export type CampaignMinAggregateOutputType = {
 export type CampaignMaxAggregateOutputType = {
   id: number | null
   sessionId: string | null
+  templateTitle: string | null
   total: number | null
   sent: number | null
   failed: number | null
@@ -67,6 +69,7 @@ export type CampaignMaxAggregateOutputType = {
 export type CampaignCountAggregateOutputType = {
   id: number
   sessionId: number
+  templateTitle: number
   total: number
   sent: number
   failed: number
@@ -97,6 +100,7 @@ export type CampaignSumAggregateInputType = {
 export type CampaignMinAggregateInputType = {
   id?: true
   sessionId?: true
+  templateTitle?: true
   total?: true
   sent?: true
   failed?: true
@@ -108,6 +112,7 @@ export type CampaignMinAggregateInputType = {
 export type CampaignMaxAggregateInputType = {
   id?: true
   sessionId?: true
+  templateTitle?: true
   total?: true
   sent?: true
   failed?: true
@@ -119,6 +124,7 @@ export type CampaignMaxAggregateInputType = {
 export type CampaignCountAggregateInputType = {
   id?: true
   sessionId?: true
+  templateTitle?: true
   total?: true
   sent?: true
   failed?: true
@@ -218,6 +224,7 @@ export type CampaignGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type CampaignGroupByOutputType = {
   id: number
   sessionId: string
+  templateTitle: string | null
   total: number
   sent: number
   failed: number
@@ -253,6 +260,7 @@ export type CampaignWhereInput = {
   NOT?: Prisma.CampaignWhereInput | Prisma.CampaignWhereInput[]
   id?: Prisma.IntFilter<"Campaign"> | number
   sessionId?: Prisma.StringFilter<"Campaign"> | string
+  templateTitle?: Prisma.StringNullableFilter<"Campaign"> | string | null
   total?: Prisma.IntFilter<"Campaign"> | number
   sent?: Prisma.IntFilter<"Campaign"> | number
   failed?: Prisma.IntFilter<"Campaign"> | number
@@ -266,6 +274,7 @@ export type CampaignWhereInput = {
 export type CampaignOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  templateTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   total?: Prisma.SortOrder
   sent?: Prisma.SortOrder
   failed?: Prisma.SortOrder
@@ -282,6 +291,7 @@ export type CampaignWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CampaignWhereInput[]
   NOT?: Prisma.CampaignWhereInput | Prisma.CampaignWhereInput[]
   sessionId?: Prisma.StringFilter<"Campaign"> | string
+  templateTitle?: Prisma.StringNullableFilter<"Campaign"> | string | null
   total?: Prisma.IntFilter<"Campaign"> | number
   sent?: Prisma.IntFilter<"Campaign"> | number
   failed?: Prisma.IntFilter<"Campaign"> | number
@@ -295,6 +305,7 @@ export type CampaignWhereUniqueInput = Prisma.AtLeast<{
 export type CampaignOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  templateTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   total?: Prisma.SortOrder
   sent?: Prisma.SortOrder
   failed?: Prisma.SortOrder
@@ -315,6 +326,7 @@ export type CampaignScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CampaignScalarWhereWithAggregatesInput | Prisma.CampaignScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Campaign"> | number
   sessionId?: Prisma.StringWithAggregatesFilter<"Campaign"> | string
+  templateTitle?: Prisma.StringNullableWithAggregatesFilter<"Campaign"> | string | null
   total?: Prisma.IntWithAggregatesFilter<"Campaign"> | number
   sent?: Prisma.IntWithAggregatesFilter<"Campaign"> | number
   failed?: Prisma.IntWithAggregatesFilter<"Campaign"> | number
@@ -326,6 +338,7 @@ export type CampaignScalarWhereWithAggregatesInput = {
 
 export type CampaignCreateInput = {
   sessionId: string
+  templateTitle?: string | null
   total: number
   sent: number
   failed: number
@@ -338,6 +351,7 @@ export type CampaignCreateInput = {
 export type CampaignUncheckedCreateInput = {
   id?: number
   sessionId: string
+  templateTitle?: string | null
   total: number
   sent: number
   failed: number
@@ -349,6 +363,7 @@ export type CampaignUncheckedCreateInput = {
 
 export type CampaignUpdateInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  templateTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total?: Prisma.IntFieldUpdateOperationsInput | number
   sent?: Prisma.IntFieldUpdateOperationsInput | number
   failed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -361,6 +376,7 @@ export type CampaignUpdateInput = {
 export type CampaignUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  templateTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total?: Prisma.IntFieldUpdateOperationsInput | number
   sent?: Prisma.IntFieldUpdateOperationsInput | number
   failed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -373,6 +389,7 @@ export type CampaignUncheckedUpdateInput = {
 export type CampaignCreateManyInput = {
   id?: number
   sessionId: string
+  templateTitle?: string | null
   total: number
   sent: number
   failed: number
@@ -384,6 +401,7 @@ export type CampaignCreateManyInput = {
 
 export type CampaignUpdateManyMutationInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  templateTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total?: Prisma.IntFieldUpdateOperationsInput | number
   sent?: Prisma.IntFieldUpdateOperationsInput | number
   failed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -395,6 +413,7 @@ export type CampaignUpdateManyMutationInput = {
 export type CampaignUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  templateTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total?: Prisma.IntFieldUpdateOperationsInput | number
   sent?: Prisma.IntFieldUpdateOperationsInput | number
   failed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -417,6 +436,7 @@ export type CampaignOrderByRelationAggregateInput = {
 export type CampaignCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  templateTitle?: Prisma.SortOrder
   total?: Prisma.SortOrder
   sent?: Prisma.SortOrder
   failed?: Prisma.SortOrder
@@ -437,6 +457,7 @@ export type CampaignAvgOrderByAggregateInput = {
 export type CampaignMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  templateTitle?: Prisma.SortOrder
   total?: Prisma.SortOrder
   sent?: Prisma.SortOrder
   failed?: Prisma.SortOrder
@@ -448,6 +469,7 @@ export type CampaignMaxOrderByAggregateInput = {
 export type CampaignMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  templateTitle?: Prisma.SortOrder
   total?: Prisma.SortOrder
   sent?: Prisma.SortOrder
   failed?: Prisma.SortOrder
@@ -512,6 +534,7 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type CampaignCreateWithoutUserInput = {
   sessionId: string
+  templateTitle?: string | null
   total: number
   sent: number
   failed: number
@@ -523,6 +546,7 @@ export type CampaignCreateWithoutUserInput = {
 export type CampaignUncheckedCreateWithoutUserInput = {
   id?: number
   sessionId: string
+  templateTitle?: string | null
   total: number
   sent: number
   failed: number
@@ -563,6 +587,7 @@ export type CampaignScalarWhereInput = {
   NOT?: Prisma.CampaignScalarWhereInput | Prisma.CampaignScalarWhereInput[]
   id?: Prisma.IntFilter<"Campaign"> | number
   sessionId?: Prisma.StringFilter<"Campaign"> | string
+  templateTitle?: Prisma.StringNullableFilter<"Campaign"> | string | null
   total?: Prisma.IntFilter<"Campaign"> | number
   sent?: Prisma.IntFilter<"Campaign"> | number
   failed?: Prisma.IntFilter<"Campaign"> | number
@@ -575,6 +600,7 @@ export type CampaignScalarWhereInput = {
 export type CampaignCreateManyUserInput = {
   id?: number
   sessionId: string
+  templateTitle?: string | null
   total: number
   sent: number
   failed: number
@@ -585,6 +611,7 @@ export type CampaignCreateManyUserInput = {
 
 export type CampaignUpdateWithoutUserInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  templateTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total?: Prisma.IntFieldUpdateOperationsInput | number
   sent?: Prisma.IntFieldUpdateOperationsInput | number
   failed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -596,6 +623,7 @@ export type CampaignUpdateWithoutUserInput = {
 export type CampaignUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  templateTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total?: Prisma.IntFieldUpdateOperationsInput | number
   sent?: Prisma.IntFieldUpdateOperationsInput | number
   failed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -607,6 +635,7 @@ export type CampaignUncheckedUpdateWithoutUserInput = {
 export type CampaignUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  templateTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total?: Prisma.IntFieldUpdateOperationsInput | number
   sent?: Prisma.IntFieldUpdateOperationsInput | number
   failed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -620,6 +649,7 @@ export type CampaignUncheckedUpdateManyWithoutUserInput = {
 export type CampaignSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sessionId?: boolean
+  templateTitle?: boolean
   total?: boolean
   sent?: boolean
   failed?: boolean
@@ -633,6 +663,7 @@ export type CampaignSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type CampaignSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sessionId?: boolean
+  templateTitle?: boolean
   total?: boolean
   sent?: boolean
   failed?: boolean
@@ -646,6 +677,7 @@ export type CampaignSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type CampaignSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sessionId?: boolean
+  templateTitle?: boolean
   total?: boolean
   sent?: boolean
   failed?: boolean
@@ -659,6 +691,7 @@ export type CampaignSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type CampaignSelectScalar = {
   id?: boolean
   sessionId?: boolean
+  templateTitle?: boolean
   total?: boolean
   sent?: boolean
   failed?: boolean
@@ -668,7 +701,7 @@ export type CampaignSelectScalar = {
   userId?: boolean
 }
 
-export type CampaignOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "total" | "sent" | "failed" | "failedDetails" | "startedAt" | "finishedAt" | "userId", ExtArgs["result"]["campaign"]>
+export type CampaignOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "templateTitle" | "total" | "sent" | "failed" | "failedDetails" | "startedAt" | "finishedAt" | "userId", ExtArgs["result"]["campaign"]>
 export type CampaignInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -687,6 +720,7 @@ export type $CampaignPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     sessionId: string
+    templateTitle: string | null
     total: number
     sent: number
     failed: number
@@ -1120,6 +1154,7 @@ export interface Prisma__CampaignClient<T, Null = never, ExtArgs extends runtime
 export interface CampaignFieldRefs {
   readonly id: Prisma.FieldRef<"Campaign", 'Int'>
   readonly sessionId: Prisma.FieldRef<"Campaign", 'String'>
+  readonly templateTitle: Prisma.FieldRef<"Campaign", 'String'>
   readonly total: Prisma.FieldRef<"Campaign", 'Int'>
   readonly sent: Prisma.FieldRef<"Campaign", 'Int'>
   readonly failed: Prisma.FieldRef<"Campaign", 'Int'>

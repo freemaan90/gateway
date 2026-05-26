@@ -103,6 +103,7 @@ export type TemplateScalarFieldEnum = (typeof TemplateScalarFieldEnum)[keyof typ
 export const CampaignScalarFieldEnum = {
   id: 'id',
   sessionId: 'sessionId',
+  templateTitle: 'templateTitle',
   total: 'total',
   sent: 'sent',
   failed: 'failed',

@@ -153,7 +153,7 @@ export class WhatsappSenderController {
     @Body() body: BulkSendDto,
     @User() user: AuthUser,
   ) {
-    const jobId = this.bulkSendService.createJob(sessionId, body.messages, user.id);
+    const jobId = this.bulkSendService.createJob(sessionId, body.messages, user.id, body.templateTitle);
     return { jobId };
   }
 

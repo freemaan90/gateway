@@ -30,6 +30,7 @@ interface BulkJob extends BulkJobStatus {
   sessionId: string;
   messages: BulkMessage[];
   userId: number;
+  templateTitle?: string;
   finishedAt?: number; // timestamp for TTL cleanup
 }
 
@@ -56,13 +57,14 @@ export class BulkSendService implements OnModuleInit {
     }, 30 * 60 * 1000);
   }
 
-  createJob(sessionId: string, messages: BulkMessage[], userId: number): string {
+  createJob(sessionId: string, messages: BulkMessage[], userId: number, templateTitle?: string): string {
     const jobId = randomUUID();
     const job: BulkJob = {
       jobId,
       sessionId,
       messages,
       userId,
+      templateTitle,
       status: 'processing',
       total: messages.length,
       done: 0,
@@ -151,6 +153,7 @@ export class BulkSendService implements OnModuleInit {
     try {
       await this.campaignService.create({
         sessionId: job.sessionId,
+        templateTitle: job.templateTitle,
         total: job.total,
         sent: job.done - job.failed.length,
         failed: job.failed.length,
