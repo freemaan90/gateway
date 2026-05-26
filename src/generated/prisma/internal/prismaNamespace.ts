@@ -688,6 +688,7 @@ export const TemplateScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
+  imageUrl: 'imageUrl',
   createdAt: 'createdAt',
   userId: 'userId'
 } as const

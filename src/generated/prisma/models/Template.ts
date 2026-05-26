@@ -40,6 +40,7 @@ export type TemplateMinAggregateOutputType = {
   id: number | null
   title: string | null
   content: string | null
+  imageUrl: string | null
   createdAt: Date | null
   userId: number | null
 }
@@ -48,6 +49,7 @@ export type TemplateMaxAggregateOutputType = {
   id: number | null
   title: string | null
   content: string | null
+  imageUrl: string | null
   createdAt: Date | null
   userId: number | null
 }
@@ -56,6 +58,7 @@ export type TemplateCountAggregateOutputType = {
   id: number
   title: number
   content: number
+  imageUrl: number
   createdAt: number
   userId: number
   _all: number
@@ -76,6 +79,7 @@ export type TemplateMinAggregateInputType = {
   id?: true
   title?: true
   content?: true
+  imageUrl?: true
   createdAt?: true
   userId?: true
 }
@@ -84,6 +88,7 @@ export type TemplateMaxAggregateInputType = {
   id?: true
   title?: true
   content?: true
+  imageUrl?: true
   createdAt?: true
   userId?: true
 }
@@ -92,6 +97,7 @@ export type TemplateCountAggregateInputType = {
   id?: true
   title?: true
   content?: true
+  imageUrl?: true
   createdAt?: true
   userId?: true
   _all?: true
@@ -187,6 +193,7 @@ export type TemplateGroupByOutputType = {
   id: number
   title: string
   content: string
+  imageUrl: string | null
   createdAt: Date
   userId: number
   _count: TemplateCountAggregateOutputType | null
@@ -218,6 +225,7 @@ export type TemplateWhereInput = {
   id?: Prisma.IntFilter<"Template"> | number
   title?: Prisma.StringFilter<"Template"> | string
   content?: Prisma.StringFilter<"Template"> | string
+  imageUrl?: Prisma.StringNullableFilter<"Template"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Template"> | Date | string
   userId?: Prisma.IntFilter<"Template"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -227,6 +235,7 @@ export type TemplateOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -239,6 +248,7 @@ export type TemplateWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TemplateWhereInput | Prisma.TemplateWhereInput[]
   title?: Prisma.StringFilter<"Template"> | string
   content?: Prisma.StringFilter<"Template"> | string
+  imageUrl?: Prisma.StringNullableFilter<"Template"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Template"> | Date | string
   userId?: Prisma.IntFilter<"Template"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -248,6 +258,7 @@ export type TemplateOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.TemplateCountOrderByAggregateInput
@@ -264,6 +275,7 @@ export type TemplateScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Template"> | number
   title?: Prisma.StringWithAggregatesFilter<"Template"> | string
   content?: Prisma.StringWithAggregatesFilter<"Template"> | string
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Template"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Template"> | Date | string
   userId?: Prisma.IntWithAggregatesFilter<"Template"> | number
 }
@@ -271,6 +283,7 @@ export type TemplateScalarWhereWithAggregatesInput = {
 export type TemplateCreateInput = {
   title: string
   content: string
+  imageUrl?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTemplatesInput
 }
@@ -279,6 +292,7 @@ export type TemplateUncheckedCreateInput = {
   id?: number
   title: string
   content: string
+  imageUrl?: string | null
   createdAt?: Date | string
   userId: number
 }
@@ -286,6 +300,7 @@ export type TemplateUncheckedCreateInput = {
 export type TemplateUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTemplatesNestedInput
 }
@@ -294,6 +309,7 @@ export type TemplateUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -302,6 +318,7 @@ export type TemplateCreateManyInput = {
   id?: number
   title: string
   content: string
+  imageUrl?: string | null
   createdAt?: Date | string
   userId: number
 }
@@ -309,6 +326,7 @@ export type TemplateCreateManyInput = {
 export type TemplateUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -316,6 +334,7 @@ export type TemplateUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -334,6 +353,7 @@ export type TemplateCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -347,6 +367,7 @@ export type TemplateMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -355,6 +376,7 @@ export type TemplateMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -413,6 +435,7 @@ export type DateTimeFieldUpdateOperationsInput = {
 export type TemplateCreateWithoutUserInput = {
   title: string
   content: string
+  imageUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -420,6 +443,7 @@ export type TemplateUncheckedCreateWithoutUserInput = {
   id?: number
   title: string
   content: string
+  imageUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -456,6 +480,7 @@ export type TemplateScalarWhereInput = {
   id?: Prisma.IntFilter<"Template"> | number
   title?: Prisma.StringFilter<"Template"> | string
   content?: Prisma.StringFilter<"Template"> | string
+  imageUrl?: Prisma.StringNullableFilter<"Template"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Template"> | Date | string
   userId?: Prisma.IntFilter<"Template"> | number
 }
@@ -464,12 +489,14 @@ export type TemplateCreateManyUserInput = {
   id?: number
   title: string
   content: string
+  imageUrl?: string | null
   createdAt?: Date | string
 }
 
 export type TemplateUpdateWithoutUserInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -477,6 +504,7 @@ export type TemplateUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -484,6 +512,7 @@ export type TemplateUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -493,6 +522,7 @@ export type TemplateSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   title?: boolean
   content?: boolean
+  imageUrl?: boolean
   createdAt?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -502,6 +532,7 @@ export type TemplateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   title?: boolean
   content?: boolean
+  imageUrl?: boolean
   createdAt?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -511,6 +542,7 @@ export type TemplateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   title?: boolean
   content?: boolean
+  imageUrl?: boolean
   createdAt?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -520,11 +552,12 @@ export type TemplateSelectScalar = {
   id?: boolean
   title?: boolean
   content?: boolean
+  imageUrl?: boolean
   createdAt?: boolean
   userId?: boolean
 }
 
-export type TemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "createdAt" | "userId", ExtArgs["result"]["template"]>
+export type TemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "imageUrl" | "createdAt" | "userId", ExtArgs["result"]["template"]>
 export type TemplateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -544,6 +577,7 @@ export type $TemplatePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: number
     title: string
     content: string
+    imageUrl: string | null
     createdAt: Date
     userId: number
   }, ExtArgs["result"]["template"]>
@@ -973,6 +1007,7 @@ export interface TemplateFieldRefs {
   readonly id: Prisma.FieldRef<"Template", 'Int'>
   readonly title: Prisma.FieldRef<"Template", 'String'>
   readonly content: Prisma.FieldRef<"Template", 'String'>
+  readonly imageUrl: Prisma.FieldRef<"Template", 'String'>
   readonly createdAt: Prisma.FieldRef<"Template", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Template", 'Int'>
 }

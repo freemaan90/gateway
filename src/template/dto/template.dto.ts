@@ -10,6 +10,9 @@ export class CreateTemplateDto {
   @IsString()
   @IsNotEmpty()
   userId!: string;
+  @IsString()
+  @IsOptional()
+  imageUrl?: string;
 }
 
 export class UpdateTemplateDto {
@@ -22,4 +25,8 @@ export class UpdateTemplateDto {
   @IsNotEmpty()
   @IsOptional()
   content?: string;
+
+  @IsString()
+  @IsOptional()
+  imageUrl?: string;
 }

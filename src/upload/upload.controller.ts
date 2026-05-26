@@ -57,4 +57,29 @@ export class UploadController {
     const url = `${env.backendUrl}/uploads/${file.filename}`;
     return { url };
   }
+
+  @Post('template-image')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_req, file, cb) => {
+          const ext = extname(file.originalname);
+          cb(null, `template-img-${uuid()}${ext}`);
+        },
+      }),
+      fileFilter: (_req, file, cb) => {
+        if (!file.mimetype.match(/^image\/(jpeg|png|gif|webp|svg\+xml)$/)) {
+          return cb(new BadRequestException('Solo se permiten imágenes'), false);
+        }
+        cb(null, true);
+      },
+      limits: { fileSize: 2 * 1024 * 1024 },
+    }),
+  )
+  uploadTemplateImage(@UploadedFile() file: Express.Multer.File) {
+    if (!file) throw new BadRequestException('No se recibió ningún archivo');
+    const url = `${env.backendUrl}/uploads/${file.filename}`;
+    return { url };
+  }
 }

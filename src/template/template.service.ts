@@ -21,6 +21,7 @@ export class TemplateService {
         title: data.title,
         content: data.content,
         userId: Number(data.userId),
+        imageUrl: data.imageUrl,
       },
     });
   }
