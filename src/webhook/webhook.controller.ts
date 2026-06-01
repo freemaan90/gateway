@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, Get, HttpCode, HttpStatus, Post, Query } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Headers, HttpCode, HttpStatus, Post, Query } from '@nestjs/common';
 import { WebhookService } from './webhook.service';
 
 @Controller('webhook')
@@ -18,6 +18,17 @@ export class WebhookController {
   @HttpCode(HttpStatus.OK)
   async handleWebhook(@Body() body: any): Promise<{ status: string }> {
     await this.webhookService.handleWebhookEvent(body);
+    return { status: 'ok' };
+  }
+
+  @Post('mercadopago')
+  @HttpCode(HttpStatus.OK)
+  async handleMercadoPagoWebhook(
+    @Body() body: any,
+    @Headers('x-signature') xSignature: string,
+    @Headers('x-request-id') xRequestId: string,
+  ): Promise<{ status: string }> {
+    await this.webhookService.handleMercadoPagoEvent(body, xSignature, xRequestId);
     return { status: 'ok' };
   }
 }

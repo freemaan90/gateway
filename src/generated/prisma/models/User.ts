@@ -272,6 +272,7 @@ export type UserWhereInput = {
   employees?: Prisma.UserListRelationFilter
   templates?: Prisma.TemplateListRelationFilter
   campaigns?: Prisma.CampaignListRelationFilter
+  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -290,6 +291,7 @@ export type UserOrderByWithRelationInput = {
   employees?: Prisma.UserOrderByRelationAggregateInput
   templates?: Prisma.TemplateOrderByRelationAggregateInput
   campaigns?: Prisma.CampaignOrderByRelationAggregateInput
+  subscription?: Prisma.SubscriptionOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -311,6 +313,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   employees?: Prisma.UserListRelationFilter
   templates?: Prisma.TemplateListRelationFilter
   campaigns?: Prisma.CampaignListRelationFilter
+  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -363,6 +366,7 @@ export type UserCreateInput = {
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
   campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOwnerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -380,6 +384,7 @@ export type UserUncheckedCreateInput = {
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
   campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOwnerInput
 }
 
 export type UserUpdateInput = {
@@ -396,6 +401,7 @@ export type UserUpdateInput = {
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
   campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -413,6 +419,7 @@ export type UserUncheckedUpdateInput = {
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
   campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -613,6 +620,20 @@ export type UserUncheckedUpdateManyWithoutOwnerNestedInput = {
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
+export type UserCreateNestedOneWithoutSubscriptionInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSubscriptionNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionInput
+  upsert?: Prisma.UserUpsertWithoutSubscriptionInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.UserUpdateWithoutSubscriptionInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
+}
+
 export type UserCreateNestedOneWithoutTemplatesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutTemplatesInput, Prisma.UserUncheckedCreateWithoutTemplatesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutTemplatesInput
@@ -654,6 +675,7 @@ export type UserCreateWithoutEmployeesInput = {
   owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
   templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
   campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutEmployeesInput = {
@@ -670,6 +692,7 @@ export type UserUncheckedCreateWithoutEmployeesInput = {
   companyLogo?: string | null
   templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
   campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutEmployeesInput = {
@@ -690,6 +713,7 @@ export type UserCreateWithoutOwnerInput = {
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
   campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutOwnerInput = {
@@ -706,6 +730,7 @@ export type UserUncheckedCreateWithoutOwnerInput = {
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
   campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutOwnerInput = {
@@ -742,6 +767,7 @@ export type UserUpdateWithoutEmployeesInput = {
   owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
   templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
   campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmployeesInput = {
@@ -758,6 +784,7 @@ export type UserUncheckedUpdateWithoutEmployeesInput = {
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
   campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutOwnerInput = {
@@ -793,6 +820,88 @@ export type UserScalarWhereInput = {
   companyLogo?: Prisma.StringNullableFilter<"User"> | string | null
 }
 
+export type UserCreateWithoutSubscriptionInput = {
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+  company?: string
+  companyLogo?: string | null
+  owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
+  employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
+  campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSubscriptionInput = {
+  id?: number
+  email: string
+  name: string
+  lastName: string
+  phone: string
+  password: string
+  refreshToken?: string | null
+  role?: $Enums.Role
+  ownerId?: number | null
+  company?: string
+  companyLogo?: string | null
+  employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
+  campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSubscriptionInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
+}
+
+export type UserUpsertWithoutSubscriptionInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionInput, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSubscriptionInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionInput, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
+}
+
+export type UserUpdateWithoutSubscriptionInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
+  employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
+  campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSubscriptionInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
+  campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutTemplatesInput = {
   email: string
   name: string
@@ -806,6 +915,7 @@ export type UserCreateWithoutTemplatesInput = {
   owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
   campaigns?: Prisma.CampaignCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutTemplatesInput = {
@@ -822,6 +932,7 @@ export type UserUncheckedCreateWithoutTemplatesInput = {
   companyLogo?: string | null
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
   campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutTemplatesInput = {
@@ -853,6 +964,7 @@ export type UserUpdateWithoutTemplatesInput = {
   owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
   campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTemplatesInput = {
@@ -869,6 +981,7 @@ export type UserUncheckedUpdateWithoutTemplatesInput = {
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
   campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutCampaignsInput = {
@@ -884,6 +997,7 @@ export type UserCreateWithoutCampaignsInput = {
   owner?: Prisma.UserCreateNestedOneWithoutEmployeesInput
   employees?: Prisma.UserCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutCampaignsInput = {
@@ -900,6 +1014,7 @@ export type UserUncheckedCreateWithoutCampaignsInput = {
   companyLogo?: string | null
   employees?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
   templates?: Prisma.TemplateUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutCampaignsInput = {
@@ -931,6 +1046,7 @@ export type UserUpdateWithoutCampaignsInput = {
   owner?: Prisma.UserUpdateOneWithoutEmployeesNestedInput
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCampaignsInput = {
@@ -947,6 +1063,7 @@ export type UserUncheckedUpdateWithoutCampaignsInput = {
   companyLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserCreateManyOwnerInput = {
@@ -975,6 +1092,7 @@ export type UserUpdateWithoutOwnerInput = {
   employees?: Prisma.UserUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUpdateManyWithoutUserNestedInput
   campaigns?: Prisma.CampaignUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOwnerInput = {
@@ -991,6 +1109,7 @@ export type UserUncheckedUpdateWithoutOwnerInput = {
   employees?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
   templates?: Prisma.TemplateUncheckedUpdateManyWithoutUserNestedInput
   campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutOwnerInput = {
@@ -1071,6 +1190,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   employees?: boolean | Prisma.User$employeesArgs<ExtArgs>
   templates?: boolean | Prisma.User$templatesArgs<ExtArgs>
   campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>
+  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1124,6 +1244,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   employees?: boolean | Prisma.User$employeesArgs<ExtArgs>
   templates?: boolean | Prisma.User$templatesArgs<ExtArgs>
   campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>
+  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1140,6 +1261,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     employees: Prisma.$UserPayload<ExtArgs>[]
     templates: Prisma.$TemplatePayload<ExtArgs>[]
     campaigns: Prisma.$CampaignPayload<ExtArgs>[]
+    subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1551,6 +1673,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   employees<T extends Prisma.User$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   templates<T extends Prisma.User$templatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   campaigns<T extends Prisma.User$campaignsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subscription<T extends Prisma.User$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2080,6 +2203,25 @@ export type User$campaignsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.CampaignScalarFieldEnum | Prisma.CampaignScalarFieldEnum[]
+}
+
+/**
+ * User.subscription
+ */
+export type User$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Subscription
+   */
+  select?: Prisma.SubscriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Subscription
+   */
+  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionInclude<ExtArgs> | null
+  where?: Prisma.SubscriptionWhereInput
 }
 
 /**

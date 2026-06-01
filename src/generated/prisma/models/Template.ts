@@ -428,10 +428,6 @@ export type TemplateUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.TemplateScalarWhereInput | Prisma.TemplateScalarWhereInput[]
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type TemplateCreateWithoutUserInput = {
   title: string
   content: string

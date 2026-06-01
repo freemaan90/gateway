@@ -5,6 +5,7 @@ import { WHATSAPP_SENDER } from 'src/service';
 import { env } from 'src/config/env';
 import { BulkSendService } from './bulk-send.service';
 import { CampaignModule } from 'src/campaign/campaign.module';
+import { BillingModule } from 'src/billing/billing.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CampaignModule } from 'src/campaign/campaign.module';
       },
     ]),
     CampaignModule,
+    BillingModule,
   ],
   controllers: [WhatsappSenderController],
   providers: [BulkSendService],

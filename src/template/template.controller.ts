@@ -4,11 +4,12 @@ import { CreateTemplateDto, UpdateTemplateDto } from './dto/template.dto';
 import { Roles } from 'src/common/decorators/Roles';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/common/guards/RolesGuard';
+import { SubscriptionGuard } from 'src/common/guards/subscription.guard';
 import { User } from 'src/common/decorators/user.decorator';
 import type { AuthUser } from 'src/common/decorators/user.decorator';
 
 @Controller('template')
-@UseGuards(JwtGuard, RolesGuard)
+@UseGuards(JwtGuard, RolesGuard, SubscriptionGuard)
 export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 

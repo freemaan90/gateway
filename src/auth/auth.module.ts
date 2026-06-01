@@ -11,6 +11,8 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { RedisService } from 'src/redis/redis.service';
 import { EmailService } from 'src/email/email.service';
+import { BillingModule } from 'src/billing/billing.module';
+import { BillingService } from 'src/billing/billing.service';
 
 @Module({
   imports: [
@@ -24,6 +26,7 @@ import { EmailService } from 'src/email/email.service';
         signOptions: { expiresIn: '7d' },
       }),
     }),
+    BillingModule,
   ],
   controllers: [AuthController],
   providers: [
@@ -34,7 +37,8 @@ import { EmailService } from 'src/email/email.service';
     PrismaService,
     JwtStrategy,
     RedisService,
-    EmailService
+    EmailService,
+    BillingService
   ],
 })
 export class AuthModule {}

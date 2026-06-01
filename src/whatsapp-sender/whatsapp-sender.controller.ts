@@ -15,6 +15,8 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, firstValueFrom, retry } from 'rxjs';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/common/guards/RolesGuard';
+import { SubscriptionGuard } from 'src/common/guards/subscription.guard';
 import { AuthUser, User } from 'src/common/decorators/user.decorator';
 import { WHATSAPP_SENDER } from 'src/service';
 import { BulkSendService } from './bulk-send.service';
@@ -23,6 +25,7 @@ import { CreateSessionDto } from './dtos/create-session.dto';
 import { SendMessageDto } from './dtos/send-message.dto';
 
 @Controller('whatsapp-sender')
+@UseGuards(JwtGuard, RolesGuard, SubscriptionGuard)
 export class WhatsappSenderController {
   private readonly logger = new Logger(WhatsappSenderController.name);
 

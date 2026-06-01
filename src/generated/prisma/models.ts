@@ -9,6 +9,9 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Plan'
+export type * from './models/Subscription'
+export type * from './models/Invoice'
 export type * from './models/Template'
 export type * from './models/Campaign'
 export type * from './commonInputTypes'

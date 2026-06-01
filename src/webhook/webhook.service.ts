@@ -1,11 +1,17 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { WebhookSignatureValidator, InvalidWebhookSignatureError, MercadoPagoConfig } from 'mercadopago';
+import { BillingService } from 'src/billing/billing.service';
+import { env } from 'src/config/env';
 
 @Injectable()
 export class WebhookService {
   private readonly logger = new Logger(WebhookService.name);
 
-  constructor(private config: ConfigService) {}
+  constructor(
+    private config: ConfigService,
+    private readonly billingService: BillingService,
+  ) {}
 
   verifyWebhook(query: {
     'hub.mode'?: string;
@@ -20,6 +26,29 @@ export class WebhookService {
       return query['hub.challenge'] ?? '';
     }
     return null;
+  }
+
+  async handleMercadoPagoEvent(body: any, xSignature: string, xRequestId: string): Promise<void> {
+    try {
+      WebhookSignatureValidator.validate({
+        xSignature,
+        xRequestId,
+        dataId: body?.data?.id,
+        secret: env.MERCADOPAGO_WEBHOOK_SECRET,
+      });
+    } catch (err) {
+      if (err instanceof InvalidWebhookSignatureError) {
+        this.logger.warn(`Invalid MercadoPago webhook signature: ${err.message}`);
+        return; // silently discard invalid signatures
+      }
+      throw err;
+    }
+
+    try {
+      await this.billingService.handleWebhookEvent(body);
+    } catch (error) {
+      this.logger.warn(`Error processing MercadoPago event: ${error?.message ?? error}`);
+    }
   }
 
   async handleWebhookEvent(body: any): Promise<void> {

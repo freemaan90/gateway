@@ -4,6 +4,7 @@ import { User } from 'src/generated/prisma/client';
 import { PasswordService } from 'src/user/password/password.service';
 import { UserService } from 'src/user/user.service';
 import { Role } from 'src/enum/Roles';
+import { BillingService } from 'src/billing/billing.service';
 
 @Injectable()
 export class AuthService {
@@ -11,6 +12,7 @@ export class AuthService {
     private readonly usersService: UserService,
     private readonly jwt: JwtService,
     private readonly passwordService: PasswordService,
+    private readonly billingService: BillingService,
   ) {}
 
   async validateUser(email: string, pass: string) {
@@ -35,14 +37,17 @@ export class AuthService {
       throw new ConflictException('Ya existe un usuario con ese email');
     }
 
-    // El registro público siempre crea un OWNER sin ownerId
     const hashedPassword = await this.passwordService.hash(data.password);
 
-    return this.usersService.createOwner({
+    const user = await this.usersService.createOwner({
       ...data,
       password: hashedPassword,
       role: Role.OWNER,
     });
+
+    await this.billingService.createTrialSubscription(user.id);
+
+    return user;
   }
 
   async login(user: User) {
@@ -51,8 +56,8 @@ export class AuthService {
       email: user.email,
       role: user.role,
       ownerId: user.ownerId,
-      company: user.company, // ✔️ agregar
-      companyLogo: user.companyLogo, // ✔️ agregar
+      company: user.company,
+      companyLogo: user.companyLogo,
     };
 
     const accessToken = await this.jwt.signAsync(payload, {
@@ -67,6 +72,7 @@ export class AuthService {
 
     return { accessToken, refreshToken };
   }
+
   async getProfile(userId: number) {
     return this.usersService.findById(userId);
   }

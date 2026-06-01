@@ -528,10 +528,6 @@ export type CampaignUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.CampaignScalarWhereInput | Prisma.CampaignScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type CampaignCreateWithoutUserInput = {
   sessionId: string
   templateTitle?: string | null
