@@ -57,10 +57,11 @@ model User {
 
 model Plan {
   id           Int      @id @default(autoincrement())
-  name         String
+  name         String   @unique
   description  String   @default("")
   priceArs     Decimal  @db.Decimal(10, 2)
   mpPlanId     String?  @unique
+  isFree       Boolean  @default(false)
   features     Json     @default("[]")
   isActive     Boolean  @default(true)
   sortOrder    Int      @default(0)

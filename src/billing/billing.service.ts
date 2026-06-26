@@ -11,7 +11,7 @@ import { env } from 'src/config/env';
 import { Subscription, SubscriptionStatus } from 'src/generated/prisma/client';
 import { MP_CLIENT } from './mercadopago.provider';
 
-const TRIAL_DAYS = 14;
+const TRIAL_DAYS = 30;
 
 @Injectable()
 export class BillingService {
@@ -23,14 +23,15 @@ export class BillingService {
   ) {}
 
   async getPlans() {
-    return this.prisma.plan.findMany({
+    const plans = await this.prisma.plan.findMany({
       where: { isActive: true },
       orderBy: { sortOrder: 'asc' },
     });
+    return plans.map((p) => ({ ...p, priceArs: p.priceArs.toString() }));
   }
 
   async getStatus(ownerId: number) {
-    const subscription = await this.prisma.subscription.findUnique({
+    let subscription = await this.prisma.subscription.findUnique({
       where: { ownerId },
       include: { plan: true },
     });
@@ -39,14 +40,31 @@ export class BillingService {
       return { status: null, plan: null, trialEndsAt: null, daysRemaining: null, currentPeriodEnd: null, mpPaymentMethodId: null, mpCardLastFour: null };
     }
 
+    // Auto-downgrade: trial expirado → plan gratuito
+    if (subscription.status === SubscriptionStatus.TRIAL && subscription.trialEndsAt && subscription.trialEndsAt < new Date()) {
+      const freePlan = await this.prisma.plan.findFirst({ where: { isFree: true, isActive: true } });
+      if (freePlan) {
+        subscription = await this.prisma.subscription.update({
+          where: { ownerId },
+          data: { status: SubscriptionStatus.ACTIVE, planId: freePlan.id, trialEndsAt: null },
+          include: { plan: true },
+        });
+        this.logger.log(`Trial expired for owner ${ownerId}, auto-downgraded to free plan`);
+      }
+    }
+
     let daysRemaining: number | null = null;
     if (subscription.status === SubscriptionStatus.TRIAL && subscription.trialEndsAt) {
       daysRemaining = Math.max(0, Math.ceil((subscription.trialEndsAt.getTime() - Date.now()) / 86_400_000));
     }
 
+    const plan = subscription.plan
+      ? { ...subscription.plan, priceArs: subscription.plan.priceArs.toString() }
+      : null;
+
     return {
       status: subscription.status,
-      plan: subscription.plan,
+      plan,
       trialEndsAt: subscription.trialEndsAt,
       daysRemaining,
       currentPeriodEnd: subscription.currentPeriodEnd,
@@ -63,14 +81,36 @@ export class BillingService {
     this.logger.log(`Trial subscription created for owner ${ownerId}, expires ${trialEndsAt.toISOString()}`);
   }
 
-  async subscribe(ownerId: number, planId: number, payerEmail: string): Promise<{ initPoint: string }> {
-    const existing = await this.prisma.subscription.findUnique({ where: { ownerId } });
+  async subscribe(ownerId: number, planId: number, payerEmail: string): Promise<{ initPoint: string | null }> {
+    const existing = await this.prisma.subscription.findUnique({ where: { ownerId }, include: { plan: true } });
     if (existing?.mpSubscriptionId && existing.status === SubscriptionStatus.ACTIVE) {
       throw new ConflictException('Ya tenés una suscripción activa');
     }
 
     const plan = await this.prisma.plan.findUnique({ where: { id: planId, isActive: true } });
     if (!plan) throw new NotFoundException('Plan no encontrado');
+
+    // Flujo gratuito: sin MercadoPago
+    if (plan.isFree) {
+      await this.prisma.subscription.upsert({
+        where: { ownerId },
+        create: { ownerId, planId, status: SubscriptionStatus.ACTIVE },
+        update: {
+          planId,
+          status: SubscriptionStatus.ACTIVE,
+          mpSubscriptionId: null,
+          mpPayerEmail: null,
+          mpPaymentMethodId: null,
+          mpCardLastFour: null,
+          trialEndsAt: null,
+          currentPeriodStart: null,
+          currentPeriodEnd: null,
+          canceledAt: null,
+        },
+      });
+      this.logger.log(`Free subscription activated for owner ${ownerId}`);
+      return { initPoint: null };
+    }
 
     // Create MP plan lazily on first subscribe
     let mpPlanId = plan.mpPlanId;

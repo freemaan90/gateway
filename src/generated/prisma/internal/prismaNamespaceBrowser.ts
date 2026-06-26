@@ -98,6 +98,7 @@ export const PlanScalarFieldEnum = {
   description: 'description',
   priceArs: 'priceArs',
   mpPlanId: 'mpPlanId',
+  isFree: 'isFree',
   features: 'features',
   isActive: 'isActive',
   sortOrder: 'sortOrder',
