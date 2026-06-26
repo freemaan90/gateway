@@ -3,7 +3,8 @@ services:
     image: postgres:16
     container_name: postgres_db
     restart: always
-    network_mode: host
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -15,8 +16,9 @@ services:
     image: redis:7-alpine
     container_name: redis_server
     restart: always
-    network_mode: host
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD} --port ${REDIS_PORT:-6379}
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     volumes:
       - redis_data:/data
 

@@ -12,7 +12,6 @@ import { PassportModule } from '@nestjs/passport';
 import { RedisService } from 'src/redis/redis.service';
 import { EmailService } from 'src/email/email.service';
 import { BillingModule } from 'src/billing/billing.module';
-import { BillingService } from 'src/billing/billing.service';
 
 @Module({
   imports: [
@@ -38,7 +37,6 @@ import { BillingService } from 'src/billing/billing.service';
     JwtStrategy,
     RedisService,
     EmailService,
-    BillingService
   ],
 })
 export class AuthModule {}
