@@ -33,7 +33,7 @@ make redis-cli
 
 Copy `.env.template` and fill in all variables. `src/config/env.ts` loads env vars **eagerly at import time** using a `required()` helper that throws on startup if any variable is missing — the app will not start with incomplete env.
 
-Required vars: `PORT`, `DATABASE_URL`, `POSTGRES_*`, `PGADMIN_*`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `REDIS_URL`, `BFF_WHATSAPP_SENDER_HOST`, `BFF_WHATSAPP_SENDER_PORT`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `FRONTEND_URL`, `VERIFY_TOKEN`.
+Required vars: `PORT`, `DATABASE_URL`, `POSTGRES_*`, `PGADMIN_*`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `REDIS_URL`, `BFF_WHATSAPP_SENDER_HOST`, `BFF_WHATSAPP_SENDER_PORT`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `FRONTEND_URL`, `VERIFY_TOKEN`, `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_WEBHOOK_SECRET`, `MERCADOPAGO_SUCCESS_URL`, `MERCADOPAGO_FAILURE_URL`, `MERCADOPAGO_PENDING_URL`.
 
 ## Architecture
 

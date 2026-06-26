@@ -5,7 +5,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { MercadoPagoConfig, PreApproval, PreApprovalPlan } from 'mercadopago';
+import { MercadoPagoConfig, PreApproval } from 'mercadopago';
 import { PrismaService } from 'src/Database/prisma.service';
 import { env } from 'src/config/env';
 import { Subscription, SubscriptionStatus } from 'src/generated/prisma/client';
@@ -112,32 +112,14 @@ export class BillingService {
       return { initPoint: null };
     }
 
-    // Create MP plan lazily on first subscribe
-    let mpPlanId = plan.mpPlanId;
-    if (!mpPlanId) {
-      const mpPlanClient = new PreApprovalPlan(this.mpClient);
-      const mpPlan = await mpPlanClient.create({
-        body: {
-          reason: plan.name,
-          auto_recurring: {
-            frequency: 1,
-            frequency_type: 'months',
-            transaction_amount: Number(plan.priceArs),
-            currency_id: 'ARS',
-          },
-          back_url: env.MERCADOPAGO_SUCCESS_URL,
-        },
-      });
-      mpPlanId = mpPlan.id!;
-      await this.prisma.plan.update({ where: { id: planId }, data: { mpPlanId } });
-      this.logger.log(`MP plan created for plan ${planId}: ${mpPlanId}`);
-    }
+    // In test environments MP requires payer to be a test user — override via MP_TEST_PAYER_EMAIL
+    const effectivePayerEmail = process.env.MP_TEST_PAYER_EMAIL ?? payerEmail;
 
     const mpPreApproval = new PreApproval(this.mpClient);
     const preApproval = await mpPreApproval.create({
       body: {
-        preapproval_plan_id: mpPlanId,
-        payer_email: payerEmail,
+        reason: plan.name,
+        payer_email: effectivePayerEmail,
         external_reference: String(ownerId),
         back_url: env.MERCADOPAGO_SUCCESS_URL,
         auto_recurring: {
@@ -146,6 +128,7 @@ export class BillingService {
           transaction_amount: Number(plan.priceArs),
           currency_id: 'ARS',
         },
+        status: 'pending',
       },
     });
 
@@ -253,7 +236,7 @@ export class BillingService {
       active: SubscriptionStatus.ACTIVE,
       paused: SubscriptionStatus.PAST_DUE,
       cancelled: SubscriptionStatus.CANCELED,
-      pending: SubscriptionStatus.TRIAL,
+      pending: SubscriptionStatus.PAST_DUE,
     };
 
     const newStatus = statusMap[preApproval.status] ?? subscription.status;
