@@ -17,9 +17,7 @@ async function bootstrap() {
   mkdirSync(uploadsDir, { recursive: true });
 
   process.stdout.write('[bootstrap] creating NestFactory\n');
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    bufferLogs: true,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   process.stdout.write('[bootstrap] NestFactory created\n');
   app.use(cookieParser());
   app.useStaticAssets(uploadsDir, { prefix: '/uploads' });
