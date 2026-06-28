@@ -30,7 +30,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   // Leer variables
-  const port = configService.get<number>('PORT') ?? 3000;
+  const port = configService.get<number>('PORT') ?? 1000;
   // Configurar CORS usando config
   app.enableCors({
     origin: [env.FRONTEND_URL, 'http://localhost:3000', 'http://localhost:4000'],
