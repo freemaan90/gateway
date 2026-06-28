@@ -10,7 +10,7 @@ function required(key: string): string {
 }
 
 export const env = {
-  port: Number(process.env.PORT ?? 3000),
+  port: Number(process.env.PORT ?? 1000),
   META_WHATSAPP_TOKEN: required('META_WHATSAPP_TOKEN'),
   META_PHONE_NUMBER_ID: required('META_PHONE_NUMBER_ID'),
   META_API_VERSION: process.env.META_API_VERSION ?? 'v21.0',
