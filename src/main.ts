@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import cookieParser from 'cookie-parser';
 import { join } from 'path';
 import { mkdirSync } from 'fs';
+import { env } from './config/env';
 
 async function bootstrap() {
   const uploadsDir = join(process.cwd(), 'uploads');
@@ -31,7 +32,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT') ?? 3000;
   // Configurar CORS usando config
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:4000'],
+    origin: [env.FRONTEND_URL, 'http://localhost:3000', 'http://localhost:4000'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
   });
@@ -52,7 +53,7 @@ async function bootstrap() {
     new ValidationExceptionFilter(),
   );
 
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 
   logger.log(`🚀 Server running on port ${port}`);
 }
