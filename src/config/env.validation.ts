@@ -12,6 +12,7 @@ export const envValidationSchema = Joi.object({
   JWT_ACCESS_SECRET: Joi.string().required(),
   JWT_REFRESH_SECRET: Joi.string().required(),
   VERIFY_TOKEN: Joi.string().required(),
-  BFF_WHATSAPP_SENDER_HOST: Joi.string().hostname().required(),
-  BFF_WHATSAPP_SENDER_PORT: Joi.number().required(),  
+  META_WHATSAPP_TOKEN: Joi.string().required(),
+  META_PHONE_NUMBER_ID: Joi.string().required(),
+  META_API_VERSION: Joi.string().default('v21.0'),
 });

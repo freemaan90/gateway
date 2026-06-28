@@ -1,15 +1,13 @@
-import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { catchError, firstValueFrom } from 'rxjs';
-import { WHATSAPP_SENDER } from 'src/service';
+import { MetaApiService } from './meta-api.service';
 import { CampaignService } from 'src/campaign/campaign.service';
 
 // Argentina is UTC-3, no DST
 const ARG_OFFSET_MS = -3 * 3_600_000;
 const SEND_START_HOUR = 8;
 const SEND_END_HOUR = 20;
-const DELAY_BETWEEN_MS = 40_000;
+const DELAY_BETWEEN_MS = 1_000;
 const JOB_TTL_MS = 2 * 60 * 60 * 1000; // clean up done jobs after 2 h
 
 interface BulkMessage {
@@ -27,7 +25,6 @@ export interface BulkJobStatus {
 }
 
 interface BulkJob extends BulkJobStatus {
-  sessionId: string;
   messages: BulkMessage[];
   userId: number;
   templateTitle?: string;
@@ -40,13 +37,11 @@ export class BulkSendService implements OnModuleInit {
   private readonly jobs = new Map<string, BulkJob>();
 
   constructor(
-    @Inject(WHATSAPP_SENDER)
-    private readonly whatsappSenderClient: ClientProxy,
+    private readonly metaApiService: MetaApiService,
     private readonly campaignService: CampaignService,
   ) {}
 
   onModuleInit() {
-    // Clean up finished jobs older than JOB_TTL_MS every 30 minutes
     setInterval(() => {
       const cutoff = Date.now() - JOB_TTL_MS;
       for (const [id, job] of this.jobs) {
@@ -57,11 +52,10 @@ export class BulkSendService implements OnModuleInit {
     }, 30 * 60 * 1000);
   }
 
-  createJob(sessionId: string, messages: BulkMessage[], userId: number, templateTitle?: string): string {
+  createJob(messages: BulkMessage[], userId: number, templateTitle?: string): string {
     const jobId = randomUUID();
     const job: BulkJob = {
       jobId,
-      sessionId,
       messages,
       userId,
       templateTitle,
@@ -105,7 +99,6 @@ export class BulkSendService implements OnModuleInit {
 
   private async processJob(job: BulkJob): Promise<void> {
     for (let i = 0; i < job.messages.length; i++) {
-      // Wait if outside send window
       while (!this.isInSendWindow()) {
         const ms = this.msUntilNextWindow();
         job.status = 'waiting';
@@ -121,14 +114,7 @@ export class BulkSendService implements OnModuleInit {
       const { phone, message } = job.messages[i];
 
       try {
-        await firstValueFrom(
-          this.whatsappSenderClient
-            .send(
-              { cmd: 'whatsapp_sender_send_message' },
-              { sessionId: job.sessionId, phone, message },
-            )
-            .pipe(catchError((err) => { throw err; })),
-        );
+        await this.metaApiService.sendTextMessage(phone, message);
         this.logger.log(`BulkJob ${job.jobId} [${i + 1}/${job.total}] sent to ${phone}`);
       } catch (err) {
         const error = err instanceof Error ? err.message : 'Error desconocido';
@@ -138,7 +124,6 @@ export class BulkSendService implements OnModuleInit {
 
       job.done = i + 1;
 
-      // 40-second delay between messages (not after the last one)
       if (i < job.messages.length - 1) {
         await this.sleep(DELAY_BETWEEN_MS);
       }
@@ -152,7 +137,7 @@ export class BulkSendService implements OnModuleInit {
 
     try {
       await this.campaignService.create({
-        sessionId: job.sessionId,
+        sessionId: 'meta-api',
         templateTitle: job.templateTitle,
         total: job.total,
         sent: job.done - job.failed.length,

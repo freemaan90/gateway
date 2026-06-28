@@ -1,28 +1,13 @@
 import { Module } from '@nestjs/common';
 import { WhatsappSenderController } from './whatsapp-sender.controller';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { WHATSAPP_SENDER } from 'src/service';
-import { env } from 'src/config/env';
+import { MetaApiService } from './meta-api.service';
 import { BulkSendService } from './bulk-send.service';
 import { CampaignModule } from 'src/campaign/campaign.module';
 import { BillingModule } from 'src/billing/billing.module';
 
 @Module({
-  imports: [
-    ClientsModule.register([
-      {
-        name: WHATSAPP_SENDER,
-        transport: Transport.TCP,
-        options: {
-          host: env.BFF_WHATSAPP_SENDER_HOST,
-          port: env.BFF_WHATSAPP_SENDER_PORT,
-        },
-      },
-    ]),
-    CampaignModule,
-    BillingModule,
-  ],
+  imports: [CampaignModule, BillingModule],
   controllers: [WhatsappSenderController],
-  providers: [BulkSendService],
+  providers: [MetaApiService, BulkSendService],
 })
 export class WhatsappSenderModule {}
