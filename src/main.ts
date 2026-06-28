@@ -12,12 +12,15 @@ import { mkdirSync } from 'fs';
 import { env } from './config/env';
 
 async function bootstrap() {
+  process.stdout.write('[bootstrap] starting\n');
   const uploadsDir = join(process.cwd(), 'uploads');
   mkdirSync(uploadsDir, { recursive: true });
 
+  process.stdout.write('[bootstrap] creating NestFactory\n');
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
   });
+  process.stdout.write('[bootstrap] NestFactory created\n');
   app.use(cookieParser());
   app.useStaticAssets(uploadsDir, { prefix: '/uploads' });
 
@@ -53,6 +56,7 @@ async function bootstrap() {
     new ValidationExceptionFilter(),
   );
 
+  process.stdout.write(`[bootstrap] listening on port ${port}\n`);
   await app.listen(port, '0.0.0.0');
 
   logger.log(`🚀 Server running on port ${port}`);
